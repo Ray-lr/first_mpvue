@@ -17,17 +17,24 @@
               <img class="bigButton" style="margin: 50rpx 32rpx 50rpx 20rpx" src="http://pics.ctripfair.com/ico_test.png"/>
             </div>
             <div style="height: 20rpx;background: #EFEFF4;"></div>
+            <!--成长经历-->
+            <div v-for="(items,inner) in item.growth" :key="inner">
+              <growth-experience :growth_props_date="items.date" :growth_props_month="items.month"
+                                 :growth_props_age="items.age" :growth_props_title="items.title"
+                                 :growth_props_img="items.img"></growth-experience>
+            </div>
           </swiper-item>
         </div>
       </swiper>
   </div>
 </template>
-
 <script>
+  import growthExperience from '@/components/growth_experience'
   import personalInfo from '@/components/personalInfo'
   export default {
     components: {
-      personalInfo
+      personalInfo,
+      growthExperience
     },
     data () {
       return {
@@ -41,7 +48,19 @@
             title: '江小白',
             img: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
             avatar: 'http://pics.ctripfair.com/island1.jpg',
-            badge: ['http://pics.ctripfair.com/badge1.jpg', 'http://pics.ctripfair.com/badge2.jpg', 'http://pics.ctripfair.com/badge3.jpg']
+            badge: ['http://pics.ctripfair.com/badge1.jpg', 'http://pics.ctripfair.com/badge2.jpg', 'http://pics.ctripfair.com/badge3.jpg'],
+            growth: [
+              {date: '24',
+                month: '12',
+                age: '两岁11个月12天',
+                title: '小朋友们终于又来到了美丽的海岛',
+                img: ['http://pics.ctripfair.com/island10.jpg', 'http://pics.ctripfair.com/island11.jpg', 'http://pics.ctripfair.com/island12.jpg']},
+              {date: '22',
+                month: '2',
+                age: '两岁1个月10天',
+                title: '小朋友们终于来到了美丽的海岛',
+                img: ['http://pics.ctripfair.com/island2.jpg', 'http://pics.ctripfair.com/island3.jpg', 'http://pics.ctripfair.com/island4.jpg']}
+            ]
           },
           {
             title: '李小明',
@@ -75,10 +94,10 @@
     height: 100%;
   }
   .swiper{
-    height: 1200rpx;
+    height: 5000rpx;
   }
   .swiper-item{
-    height: 1000rpx;
+    height: 100%;
   }
   .bigButton{
     height: 140rpx;
