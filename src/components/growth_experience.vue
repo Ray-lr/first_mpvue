@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 0 24rpx">
-    <div style="display: flex;height:600rpx">
+    <div style="display: flex;">
       <div style="display: flex;width: 160rpx">
       <div style="height:100%">
         <!--圆-->
@@ -13,7 +13,7 @@
         <p class="month">{{growth.month}}月</p>
       </div>
       </div>
-      <div style="width: 540rpx">
+      <div style="width: 540rpx;margin-bottom: 100rpx">
       <div style="position: relative;">
         <p class="age">{{growth.age}}</p>
       </div>

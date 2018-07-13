@@ -1,8 +1,8 @@
 <!--成长之路页面-->
 <template>
-  <div>
+  <div id="out" ref="outter" style="margin: 0">
       <swiper :indicator-dots="indicatorDots" :autoplay="autoPlay" :interval="interval" :duration="duration" :circular="circular"
-              @change="swiperChange" @animationfinish="animationfinish" class="swiper">
+              @change="swiperChange" @animationfinish="animationfinish" style="height:100%">
         <div v-for="item in campusInfo" :key="index">
           <swiper-item class="swiper-item">
             <!--营员信息（头）-->
@@ -17,11 +17,17 @@
               <img class="bigButton" style="margin: 50rpx 32rpx 50rpx 20rpx" src="http://pics.ctripfair.com/ico_test.png"/>
             </div>
             <div style="height: 20rpx;background: #EFEFF4;"></div>
+            <div style="height: 40rpx"></div>
             <!--成长经历-->
             <div v-for="(items,inner) in item.growth" :key="inner">
               <growth-experience :growth_props_date="items.date" :growth_props_month="items.month"
                                  :growth_props_age="items.age" :growth_props_title="items.title"
                                  :growth_props_img="items.img"></growth-experience>
+            </div>
+            <!--最后（更多）-->
+            <div style="display: flex;margin: 0 24rpx">
+              <div class="oval"></div>
+              <button style="align: left" @click="more(item)">更多</button>
             </div>
           </swiper-item>
         </div>
@@ -38,6 +44,7 @@
     },
     data () {
       return {
+        height_swiper: 2000,
         indicatorDots: true,
         autoPlay: false,
         interval: 5000,
@@ -54,7 +61,7 @@
                 month: '12',
                 age: '两岁11个月12天',
                 title: '小朋友们终于又来到了美丽的海岛',
-                img: ['http://pics.ctripfair.com/island10.jpg', 'http://pics.ctripfair.com/island11.jpg', 'http://pics.ctripfair.com/island12.jpg']},
+                img: ['http://pics.ctripfair.com/island10.jpg', 'http://pics.ctripfair.com/island11.jpg', 'http://pics.ctripfair.com/island12.jpg', 'http://pics.ctripfair.com/island1.jpg']},
               {date: '22',
                 month: '2',
                 age: '两岁1个月10天',
@@ -77,30 +84,45 @@
         ]
       }
     },
+    mounted () {
+      console.log(this.$refs.outter)
+    },
     methods: {
       swiperChange (e) {
         // console.log('第' + e.mp.detail.current + '张轮播图发生了滑动')
       },
       animationfinish (e) {
         // console.log('第' + e.mp.detail.current + '张轮播图滑动结束')
+      },
+      more: function (e) {
+        this.height_swiper *= 2
+        // document.getElementById('outter').style.height = this.height_swiper
+        console.log(this.$refs.outter)
       }
     }
   }
 </script>
 
 <style>
-  .slide-image {
-    width: 100%;
-    height: 100%;
+  #out{
+    height:2000rpx;
   }
-  .swiper{
-    height: 5000rpx;
-  }
+ /* .swiper{
+    height:2000rpx;
+  }*/
   .swiper-item{
     height: 100%;
   }
   .bigButton{
     height: 140rpx;
     width: 216rpx
+  }
+  .oval{
+    background-image: linear-gradient(-180deg, #FFFFFF 24%, #E7E7E7 80%);
+    border: 4rpx solid #23C8DA;
+    box-shadow: 0 2rpx 6rpx 0 rgba(2,91,101,0.60);
+    width: 24rpx;
+    height: 24rpx;
+    border-radius: 50%;
   }
 </style>
