@@ -1,3 +1,4 @@
+<!--成长经历组件-->
 <template>
   <div style="margin: 0 24rpx">
     <div style="display: flex;">

@@ -1,6 +1,7 @@
 <!--成长之路页面-->
 <template>
-  <div id="out" ref="outter" style="margin: 0">
+  <!--绑定style可以使用变量动态控制css属性-->
+  <div  :style="{'height':height_swiper+ 'rpx'}">
       <swiper :indicator-dots="indicatorDots" :autoplay="autoPlay" :interval="interval" :duration="duration" :circular="circular"
               @change="swiperChange" @animationfinish="animationfinish" style="height:100%">
         <div v-for="item in campusInfo" :key="index">
@@ -97,7 +98,6 @@
       more: function (e) {
         this.height_swiper *= 2
         // document.getElementById('outter').style.height = this.height_swiper
-        console.log(this.$refs.outter)
       }
     }
   }
