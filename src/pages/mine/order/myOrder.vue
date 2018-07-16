@@ -1,7 +1,7 @@
 <!--我的订单页面-->
 <template>
   <div>
-    <div>
+    <div style="margin: 30rpx 28rpx">
       <order :info="info"></order>
     </div>
   </div>

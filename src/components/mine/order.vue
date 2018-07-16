@@ -63,8 +63,9 @@
 
 <style scoped>
   .vfor{
-    margin-top: 60rpx;
-    box-shadow:20rpx 20rpx 20rpx 5rpx #aaaaaa;
+    margin: 60rpx 0;
+    /*box-shadow:20rpx 20rpx 20rpx 5rpx #aaaaaa;*/
+    box-shadow: 0 20rpx 34rpx 0 rgba(0,0,0,0.12);
     background-size: 100% 100%;
     background-color:#fffffe;
     /*background-image:url(http://pics.ctripfair.com/bg_cardblue.jpg);*/

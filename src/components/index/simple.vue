@@ -3,7 +3,7 @@
   <div>
     <swiper style="height: 200px" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :previous-margin="30" :next-margin="30"
             :duration="duration" :circular="circular" display-multiple-items="2" @change="swiperChange" @animationfinish="animationfinish">
-      <div v-for="item in params" :key="index">
+      <div v-for="item in params" :key="index" @click="routeDetail(item)">
         <swiper-item>
           <img :src="item.url" class="slide-image"/>
             <p class="smallTitle">{{item.title}}</p>
@@ -39,6 +39,12 @@
         }
       },
       methods: {
+        routeDetail: function (e) {
+          wx.navigateTo({
+            url: './routeDetail_tourist/main?title=' + e.title + '&img=' + e.url + '&price=' + e.price + '&way=' + e.way
+          })
+          console.log('navigate2routeDetail')
+        }
       }
     }
 </script>

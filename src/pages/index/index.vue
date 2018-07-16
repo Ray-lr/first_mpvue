@@ -1,11 +1,14 @@
+<!--主页-->
 <template>
   <div class="container">
     <div class="page">
+      <!--城市选择-->
       <div style="width: 20%;float: left;align-items: center;">
       <picker style="width: 20%;margin: 8px 8px" mode="region" :value="region" @change="CityChange">
         <p style="color: darkgray;font-size: 12px;width: 60px">{{city}}<img style="color: darkgray;width: 8px;height: 8px;" src="http://pics.ctripfair.com/Back%20Arrow.png"></p>
       </picker>
       </div>
+      <!--搜索框-->
       <div class="weui-search-bar" style="margin-right:20rpx ">
         <div class="weui-search-bar__form">
           <div class="weui-search-bar__box">
@@ -24,16 +27,6 @@
       </div>
       <!--搜索结果展示-->
       <div class="weui-cells searchbar-result" v-if="inputVal.length > 0">
-        <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-          <div class="weui-cell__bd">
-            <div>实时搜索文本</div>
-          </div>
-        </navigator>
-        <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-          <div class="weui-cell__bd">
-            <div>实时搜索文本</div>
-          </div>
-        </navigator>
         <navigator url="" class="weui-cell" hover-class="weui-cell_active">
           <div class="weui-cell__bd">
             <div>实时搜索文本</div>

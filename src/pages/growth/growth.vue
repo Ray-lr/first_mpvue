@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-  import growthExperience from '@/components/growth_experience'
+  import growthExperience from '@/components/growth/growth_experience'
   import personalInfo from '@/components/personalInfo'
   export default {
     components: {
