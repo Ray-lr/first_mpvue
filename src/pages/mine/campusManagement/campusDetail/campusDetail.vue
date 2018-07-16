@@ -33,7 +33,7 @@
 
 <script>
   import personalInfo from '@/components/personalInfo'
-  import member from '@/components/members'
+  import member from '@/components/mine/members'
   export default {
     components: {
       personalInfo,

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import order from '@/components/order'
+  import order from '@/components/mine/order'
   export default {
     components: {
       order

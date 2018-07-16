@@ -99,14 +99,12 @@
 </template>
 
 <script>
-import card from '@/components/card'
 import MpRadio from 'mp-weui/packages/radio'
 import slide from '@/components/slide'
-import littleHead from '@/components/little_head'
-import simple from '@/components/simple'
+import littleHead from '@/components/index/little_head'
+import simple from '@/components/index/simple'
 export default {
   components: {
-    card,
     MpRadio,
     slide,
     littleHead,

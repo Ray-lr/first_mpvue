@@ -27,7 +27,7 @@
 <script>
   import personalInfo from '@/components/personalInfo'
   import store from '../../../store'
-  import member from '@/components/members'
+  import member from '@/components/mine/members'
   export default {
     components: {
       personalInfo,

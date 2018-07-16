@@ -86,7 +86,6 @@
       }
     },
     mounted () {
-      console.log(this.$refs.outter)
     },
     methods: {
       swiperChange (e) {
@@ -95,6 +94,7 @@
       animationfinish (e) {
         // console.log('第' + e.mp.detail.current + '张轮播图滑动结束')
       },
+      // 点击跟多触发方法，数据库取值并且将滑块高度*2
       more: function (e) {
         this.height_swiper *= 2
         // document.getElementById('outter').style.height = this.height_swiper
