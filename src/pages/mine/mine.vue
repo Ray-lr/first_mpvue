@@ -35,6 +35,7 @@
           <img style="width: 15.6rpx;height: 26rpx;margin: 30rpx 0" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
         </div>
       </div>
+      <!--会员等级-->
       <div style="display: flex">
         <div style="border-bottom-style: solid;border-color: #c7c7c7;border-width: 2rpx;width: 118rpx;height: 90rpx">
           <img class="littleIcon" src="http://pics.ctripfair.com/ico_member.png"/>

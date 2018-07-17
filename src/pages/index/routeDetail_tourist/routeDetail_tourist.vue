@@ -1,6 +1,7 @@
 <!--路线详情-->
 <template>
   <div>
+    <!--introduce路线简介-->
     <div class="abstract">
       <div style="width: 646rpx;height:602rpx;margin: 20rpx;">
         <img style="width: 646rpx;height:344rpx;" :src="route.url"/>
@@ -8,14 +9,40 @@
         <p class="introduction" style="font-size: 28rpx">简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介</p>
         <div class="priceDiv">
           <img style="width: 36rpx;height:36rpx;" src="http://pics.ctripfair.com/ico_seal1.png"/>
-          <p class="price" style="font-size: 28rpx">成人：￥<span style="width: 64rpx">{{route.price}}</span>
-            /人 &nbsp &nbsp 儿童：￥<span style="width: 64rpx">{{route.price}}</span>/人</p>
+          <p class="price" style="font-size: 28rpx">成人：￥<span style="width: 64rpx">{{route.price}}</span>/人 &nbsp &nbsp 儿童：￥<span style="width: 64rpx">{{route.price}}</span>/人</p>
         </div>
         <div class="priceDiv">
           <img style="width: 36rpx;height:36rpx;" src="http://pics.ctripfair.com/ico_seal2.png"/>
-          <p class="price" style="font-size: 28rpx">成人：￥<span style="color:coral;width: 64rpx">{{route.price}}</span>
-         /人 &nbsp &nbsp 儿童：￥<span style="color:coral;width: 64rpx">{{route.price}}</span>/人</p>
+          <p class="price" style="font-size: 28rpx">成人：￥<span style="color:coral;width: 64rpx">{{route.price}}</span>/人 &nbsp &nbsp 儿童：￥<span style="color:coral;width: 64rpx">{{route.price}}</span>/人</p>
         </div>
+      </div>
+    </div>
+    <!--日期时间-->
+    <div class="timeSpaceDiv">
+        <p class="otherFonts">发团日期</p>
+        <p class="otherFonts" style="text-align: right;color: #151515">2018.8.15</p>
+        <img style="width: 15.6rpx;height: 26rpx;margin: 30rpx 0" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
+    </div>
+    <div class="timeSpaceDiv">
+      <p class="otherFonts">时间地点</p>
+      <p class="otherFonts" style="text-align: right;color: #151515; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">6:00|滨海国际机场aaaaaaaaaaaaaaaaaaaa</p>
+      <img style="width: 15.6rpx;height: 26rpx;margin: 30rpx 0" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
+    </div>
+    <!--导航-->
+    <div class="weui-tab">
+      <div class="weui-navbar">
+        <block v-for="(item,index) in tabs" :key="index">
+          <div :id="index" :class="{'weui-bar__item_on':activeIndex == index}" class="weui-navbar__item" @click="tabClick">
+            <div class="weui-navbar__title">{{item}}</div>
+          </div>
+        </block>
+        <!--<div class="weui-navbar__slider" :class="navbarSliderClass"></div>-->
+      </div>
+      <div class="weui-tab__panel">
+        <div class="weui-tab__content" :hidden="activeIndex != 0">行程安排的内容</div>
+        <div class="weui-tab__content" :hidden="activeIndex != 1">线路特色的内容</div>
+        <div class="weui-tab__content" :hidden="activeIndex != 2">费用说明的内容</div>
+        <div class="weui-tab__content" :hidden="activeIndex != 3">预订须知的内容</div>
       </div>
     </div>
   </div>
@@ -31,8 +58,13 @@
           url: '',
           price: '',
           way: ''
-        }
+        },
+        tabs: ['行程安排', '线路特色', '费用说明', '预订须知'],
+        activeIndex: 0,
+        fontSize: 30
       }
+    },
+    computed: {
     },
     mounted: function () {
       let _this = this
@@ -40,49 +72,79 @@
       _this.route.url = _this.$root.$mp.query.img
       _this.route.price = _this.$root.$mp.query.price
       _this.route.way = _this.$root.$mp.query.way
+    },
+    methods: {
+      tabClick (e) {
+        console.log(e)
+        this.activeIndex = e.currentTarget.id
+      }
     }
   }
 </script>
 
 <style scoped>
   .abstract {
-    width: 686 rpx;
-    height: 682 rpx;
+    width: 686rpx;
+    height: 682rpx;
     background: #FFFFFF;
-    box-shadow: 0 20 rpx 34 rpx 0 rgba(0, 0, 0, 0.12);
-    border-radius: 16 rpx;
+    box-shadow: 0 20rpx 34rpx 0 rgba(0, 0, 0, 0.12);
+    border-radius: 16rpx;
     margin: 32rpx;
   }
 
   .title {
     font-family: PingFangSC-Medium;
-    font-size: 40 rpx;
+    font-size: 40rpx;
     color: #333333;
     letter-spacing: 0;
-    line-height: 36 rpx;
+    line-height: 36rpx;
     font-weight: bold;
-    margin: 20 rpx 0;
+    margin: 20rpx 0;
   }
 
   .introduction {
     font-family: PingFangSC;
-    font-size: 22 rpx;
+    font-size: 28rpx;
     color: #666666;
     letter-spacing: 0;
-    line-height: 36 rpx;
-    margin: 10 rpx 0;
+    line-height: 36rpx;
+    margin: 20rpx 0;
   }
   .priceDiv{
-    height: 40rpx;
+    height: 45rpx;
     margin: 6rpx 0;
     display: flex;
   }
   .price{
     font-family: PingFangSC-Regular;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     color: #333333;
     letter-spacing: -0.44rpx;
     margin-left: 16rpx;
     width: 500rpx;
+  }
+  .timeSpaceDiv{
+    display:flex;
+    width: 686rpx;
+    height: 80rpx;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 0 #CECED0;
+    border-bottom-style: solid;
+    border-width: 2rpx 0;
+    border-color: #c7c7c7;
+    margin:0 32rpx;
+  }
+  .otherFonts{
+    margin: 20rpx;
+    width: 300rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #666666;
+    letter-spacing: 0;
+    line-height: 22px;
+  }
+  .weui-tab__content {
+    padding-top: 60px;
+    text-align: center;
   }
 </style>
