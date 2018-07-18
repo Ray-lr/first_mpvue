@@ -7,7 +7,7 @@
         <!--圆-->
         <div class="oval"></div>
         <!--线-->
-        <div style="border-width: 4rpxpx;background-color:  #DDDDDD;width: 6rpx;height: 99.47%;margin: 0 14rpx"></div>
+        <div style="border-width: 4rpx;background-color:  #DDDDDD;width: 6rpx;height: 99.47%;margin: 0 14rpx"></div>
       </div>
       <div style="display: flex;margin: 0 6rpx;width: 120rpx">
         <p class="date">{{growth.date}}</p>

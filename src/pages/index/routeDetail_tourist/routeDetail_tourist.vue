@@ -23,7 +23,7 @@
         <p class="otherFonts" style="text-align: right;color: #151515">2018.8.15</p>
         <img style="width: 15.6rpx;height: 26rpx;margin: 30rpx 0" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
     </div>
-    <div class="timeSpaceDiv">
+    <div class="timeSpaceDiv" style="margin-bottom: 60rpx">
       <p class="otherFonts">时间地点</p>
       <p class="otherFonts" style="text-align: right;color: #151515; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">6:00|滨海国际机场aaaaaaaaaaaaaaaaaaaa</p>
       <img style="width: 15.6rpx;height: 26rpx;margin: 30rpx 0" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
@@ -38,18 +38,46 @@
         </block>
         <!--<div class="weui-navbar__slider" :class="navbarSliderClass"></div>-->
       </div>
-      <div class="weui-tab__panel">
-        <div class="weui-tab__content" :hidden="activeIndex != 0">行程安排的内容</div>
-        <div class="weui-tab__content" :hidden="activeIndex != 1">线路特色的内容</div>
-        <div class="weui-tab__content" :hidden="activeIndex != 2">费用说明的内容</div>
-        <div class="weui-tab__content" :hidden="activeIndex != 3">预订须知的内容</div>
+      <div class="weui-tab__panel" style="background: #F8F7FC;border-radius: 8rpx;">
+        <!--行程安排的内容-->
+        <div class="weui-tab__content" :hidden="activeIndex != 0">
+          <div style="display: flex;width: 670rpx;height:68rpx;margin: 60rpx 8rpx">
+            <p class="beginToEnd" style="text-align: right">天津</p>
+            <img style="width: 68rpx;height:68rpx;margin: 0 20rpx" src="http://pics.ctripfair.com/plane.png"/>
+            <p class="beginToEnd" style="text-align: left">三亚</p>
+          </div>
+          <div>
+            <scheduling></scheduling>
+          </div>
+          <div>
+            <scheduling></scheduling>
+          </div>
+        </div>
+        <!--线路特色的内容-->
+        <div class="weui-tab__content" :hidden="activeIndex != 1">
+
+        </div>
+        <!--费用说明的内容-->
+        <div class="weui-tab__content" :hidden="activeIndex != 2">
+
+        </div>
+        <!--预订须知的内容-->
+        <div class="weui-tab__content" :hidden="activeIndex != 3">
+
+        </div>
       </div>
     </div>
+    <!--预定按钮-->
+    <button class="order" @click="navigate2FillOrder">预订</button>
   </div>
 </template>
 
 <script>
+  import scheduling from '@/components/index/routeDetail/scheduling'
   export default {
+    components: {
+      scheduling
+    },
     props: ['route_tourist'],
     data () {
       return {
@@ -77,6 +105,12 @@
       tabClick (e) {
         console.log(e)
         this.activeIndex = e.currentTarget.id
+      },
+      navigate2FillOrder: function () {
+        console.log('跳转到填写订单')
+        wx.navigateTo({
+          url: './fillOrder/main?title=' + this.route.title
+        })
       }
     }
   }
@@ -107,7 +141,7 @@
     font-size: 28rpx;
     color: #666666;
     letter-spacing: 0;
-    line-height: 36rpx;
+    /*line-height: 36rpx;*/
     margin: 20rpx 0;
   }
   .priceDiv{
@@ -141,10 +175,29 @@
     font-size: 32rpx;
     color: #666666;
     letter-spacing: 0;
-    line-height: 22px;
+    line-height: 44rpx;
   }
   .weui-tab__content {
-    padding-top: 60px;
+    margin: 0 32rpx;
+    width: 686rpx;
+    padding-top: 60rpx;
     text-align: center;
+  }
+  .beginToEnd{
+    font-family: PingFangSC-Medium;
+    font-size: 48rpx;
+    color: #333333;
+    letter-spacing: 0.38rpx;
+    line-height: 68rpx;
+    width: 280rpx;
+  }
+  .order{
+    background-image:linear-gradient(-180deg, #68F2FA 0%, #23C8DA 82%);
+    box-shadow: 0 -2rpx 16rpx 0 rgba(0,0,0,0.20);
+    width: 100%;
+    height:100rpx;
+    position: fixed;
+    bottom: 0;
+    color: white;
   }
 </style>
