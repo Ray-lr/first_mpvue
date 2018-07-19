@@ -15,7 +15,7 @@ export default {
       'pages/mine/discount/main', 'pages/mine/order/main', 'pages/mine/campusManagement/main',
       'pages/mine/campusManagement/campusDetail/main', 'pages/mine/campusManagement/campusAdd/main',
       'pages/mine/campusManagement/campusDetail/attention2Me/main', 'pages/index/routeDetail_tourist/main',
-      'pages/index/routeDetail_tourist/fillOrder/main'],
+      'pages/index/routeDetail_tourist/fillOrder/main', 'pages/growth/campPeriod/main' ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
