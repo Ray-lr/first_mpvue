@@ -80,9 +80,9 @@
 }
   .orderStatus{
     font-family: PingFangSC-Medium;
-    font-size: 14px;
-    /*color: #23C8DA;*/
-    letter-spacing: -0.22px;
+    font-size: 28rpx;
+    color: #23C8DA;
+    letter-spacing: -0.44rpx;
     width: 84rpx;
     height: 40rpx;
   }
