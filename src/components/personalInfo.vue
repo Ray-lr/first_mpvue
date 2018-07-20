@@ -3,12 +3,15 @@
   <div>
     <div class="mine">
       <div class="nickNameDiv">
-        <p class="nickName" v-if="info.title===''||!info.title">{{userInfo.nickName}}</p>
-        <p class="nickName" v-else>{{info.title}}</p>
+        <div v-if="info.title===''||!info.title">
+        <p class="nickName" >{{userInfo.nickName}}</p>
         <p class="userName" >账号：{{userInfo.nickName}}</p>
+        </div>
+        <p class="nickName" v-else>{{info.title}}</p>
       </div>
-      <div style="width: 150rpx;height:150rpx;margin-top:30rpx">
-        <img style="width: 150rpx;height:150rpx;border-radius: 50%;" v-if="userInfo.avatarUrl" :src="info.avatar||userInfo.avatarUrl" />
+      <div style="width: 150rpx;height:150rpx;margin-top:30rpx; float: right">
+        <img style="width: 150rpx;height:150rpx;border-radius: 50%;" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" />
+        <img style="width: 150rpx;height:150rpx;border-radius: 50%;" v-else :src="info.avatar" />
       </div>
     </div>
     <div style="display: flex;margin-left: 20rpx;width:500rpx">
@@ -61,7 +64,7 @@
   }
 
   .nickNameDiv {
-    width: 300 rpx;
+    width: 60%;
     height: 82 rpx;
     margin: 30rpx;
   }

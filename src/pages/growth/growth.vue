@@ -13,8 +13,8 @@
             <!--<div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7"></div>-->
             <!--三个小标题按钮（营期，相册，评测）-->
             <div style="height: 240rpx;display: flex;border-style: solid;border-width: 2rpx 0;border-color: #c7c7c7">
-              <img class="bigButton" style="margin: 50rpx 20rpx 50rpx 32rpx" src="http://pics.ctripfair.com/ico_cump.png" @click="navigateToCamp(els)"/>
-              <img class="bigButton" style="margin: 50rpx 20rpx" src="http://pics.ctripfair.com/ico_album.png"/>
+              <img class="bigButton" style="margin: 50rpx 20rpx 50rpx 32rpx" src="http://pics.ctripfair.com/ico_cump.png" @click="navigateToCamp"/>
+              <img class="bigButton" style="margin: 50rpx 20rpx" src="http://pics.ctripfair.com/ico_album.png" @click="navigateToAlbum"/>
               <img class="bigButton" style="margin: 50rpx 32rpx 50rpx 20rpx" src="http://pics.ctripfair.com/ico_test.png"/>
             </div>
             <div style="height: 20rpx;background: #EFEFF4;"></div>
@@ -51,11 +51,6 @@
         interval: 5000,
         duration: 900,
         circular: true,
-        els: {
-          id: '1',
-          name: '江小白',
-          account: 'sanzhixiong'
-        },
         campusInfo: [
           {
             title: '江小白',
@@ -106,7 +101,12 @@
       },
       navigateToCamp: function (e) {
         wx.navigateTo({
-          url: './campPeriod/main?id=' + e.id + '&name=' + e.name + '&account=' + e.account
+          url: './campPeriod/main?title=' + e.title
+        })
+      },
+      navigateToAlbum: function (e) {
+        wx.navigateTo({
+          url: './photoAlbum/main?title=' + e.title
         })
       }
     }
