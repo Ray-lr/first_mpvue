@@ -47,13 +47,13 @@
             endDate: '2018.01.12'
           },
           {
-            img: 'http://pics.ctripfair.com/035b076d-86ce-4585-b6c2-5f5df69be112',
+            img: 'http://pics.ctripfair.com/11c7f7d8-a50c-46d6-986d-9b66d1b953cd',
             title: '三只熊海南三亚夏令营',
             startDate: '2018.01.02',
             endDate: '2018.01.12'
           },
           {
-            img: 'http://pics.ctripfair.com/035b076d-86ce-4585-b6c2-5f5df69be112',
+            img: 'http://pics.ctripfair.com/2e363327-0002-44d2-806c-9c81f0e1ed41',
             title: '三只熊海南三亚夏令营',
             startDate: '2018.01.02',
             endDate: '2018.01.12'
@@ -62,11 +62,6 @@
       }
     },
     mounted: function () {
-      // let _this = this
-      // 注意mpvue的路径参数获取方式
-      // _this.id = _this.$root.$mp.query.id
-      // _this.name = _this.$root.$mp.query.name
-      // _this.account = _this.$root.$mp.query.account
     }
   }
 </script>
@@ -75,27 +70,6 @@
   .mine{
     width: 100%;
     height: 260rpx;
-  }
-  .nickName{
-    width: 60%;
-    height: 82rpx;
-    margin: 30rpx;
-  }
-  .accountNum{
-    font-size: 32rpx;
-    color: #666666;
-    letter-spacing: 0;
-    line-height: 36rpx;
-    /*width: 60%;*/
-    height: 36rpx;
-    margin-left: 30rpx;
-  }
-  .userinfo-avatar {
-    width: 128rpx;
-    height: 128rpx;
-    margin: 30rpx;
-    border-radius: 50%;
-    float: right;
   }
   .campInfo{
     width: 686rpx;
