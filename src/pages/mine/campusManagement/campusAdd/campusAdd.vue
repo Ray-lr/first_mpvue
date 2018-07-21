@@ -11,28 +11,28 @@
       <form @submit.prevent="addSubmit($event)">
         <div class="element">
           <div>
-            <p class="fonts">成员姓名</p>
+            <p class="fonts">成员姓名&nbsp&nbsp</p>
           </div>
           <div>
-            <input name="name" v-model="name" style="height: 80rpx" type="text" placeholder="请输入成员姓名"/>
+            <input name="name" v-model="name" style="height: 80rpx;" type="text" placeholder="请输入成员姓名"/>
           </div>
         </div>
         <div class="element" style="border-style: solid;border-width: 2rpx 0;border-color: #c7c7c7">
           <div>
             <picker @change="IDChange" :value="indexPicker" :range="array_id">
               <p class="fonts">{{idType}}
-                <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>
+                <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>&nbsp&nbsp
               </p>
             </picker>
           </div>
           <div>
-            <input name="idNum" v-model="idNum" style="height: 80rpx;" type="idcard" placeholder="请输入身份证号码"/>
+            <input name="idNum" v-model="idNum" style="height: 80rpx;" type="idcard" placeholder="请输入证件号码"/>
           </div>
         </div>
         <div class="element">
           <picker @change="roleChange" :value="indexPicker" :range="array_role">
             <p class="fonts">{{role}}
-              <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>
+              <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>&nbsp&nbsp
             </p>
           </picker>
           <div>
