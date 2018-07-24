@@ -15,7 +15,7 @@
             <div style="height: 240rpx;display: flex;border-style: solid;border-width: 2rpx 0;border-color: #c7c7c7">
               <img class="bigButton" style="margin: 50rpx 20rpx 50rpx 32rpx" src="http://pics.ctripfair.com/ico_cump.png" @click="navigateToCamp"/>
               <img class="bigButton" style="margin: 50rpx 20rpx" src="http://pics.ctripfair.com/ico_album.png" @click="navigateToAlbum"/>
-              <img class="bigButton" style="margin: 50rpx 32rpx 50rpx 20rpx" src="http://pics.ctripfair.com/ico_test.png"/>
+              <img class="bigButton" style="margin: 50rpx 32rpx 50rpx 20rpx" src="http://pics.ctripfair.com/ico_test.png" @click="navigateToEvaluate"/>
             </div>
             <div style="height: 20rpx;background: #EFEFF4;"></div>
             <div style="height: 40rpx"></div>
@@ -107,6 +107,11 @@
       navigateToAlbum: function (e) {
         wx.navigateTo({
           url: './photoAlbum/main?title=' + e.title
+        })
+      },
+      navigateToEvaluate: function (e) {
+        wx.navigateTo({
+          url: './evaluate/main?title=' + e.title
         })
       }
     }

@@ -12,9 +12,9 @@
                 <p class="pusher">三只熊官方推送</p>
                 <p class="pushTitle">{{item.title}}</p>
               </div>
-          <div v-for="(items,inner) in item.img" :key="inner" class="innerDiv">
-            <img class="image" :src="items"/>
-          </div>
+              <div v-for="(items,inner) in item.img" :key="inner" class="innerDiv">
+                <img class="image" :src="items"/>
+              </div>
               <div style="position: relative;left: 20rpx;">
                 <p class="time">{{item.time}}</p>
               </div>
