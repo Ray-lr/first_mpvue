@@ -82,7 +82,7 @@
             'http://pics.ctripfair.com/island4.jpg'],
           evaluateAbility: [
             {
-              medal: 'http://testpics.ctripfair.com/medal2.png',
+              medal: 'http://pics.ctripfair.com/medal2.png',
               medalTitle: '分析与创造力',
               evalTitle: '营员在实践中体现的子能力：',
               ability: [
@@ -98,7 +98,7 @@
               remarkMan: '大兵队长'
             },
             {
-              medal: 'http://testpics.ctripfair.com/medal2.png',
+              medal: 'http://pics.ctripfair.com/medal2.png',
               medalTitle: '分析与创造力',
               evalTitle: '营员在实践中体现的子能力：',
               ability: [
