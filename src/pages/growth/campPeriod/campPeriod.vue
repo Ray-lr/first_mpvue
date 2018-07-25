@@ -75,8 +75,8 @@
     width: 686rpx;
     height: 500rpx;
     background: #FFFFFF;
-    box-shadow: 0 10px 17px 0 rgba(0,0,0,0.12);
-    border-radius: 8px;
+    box-shadow: 0 20rpx 34rpx 0 rgba(0,0,0,0.12);
+    border-radius: 16rpx;
     margin: 30rpx 32rpx 50rpx 32rpx;
     padding: 20rpx 20rpx 24rpx 20rpx;
   }
@@ -90,18 +90,18 @@
     height: 36rpx;
     margin-bottom: 24rpx;
     font-family: PingFangSC-Medium;
-    font-size: 18px;
+    font-size: 36rpx;
     color: #333333;
     letter-spacing: 0;
-    line-height: 18px;
+    line-height: 36rpx;
   }
   .campDate{
     width: 526rpx;
     height: 36rpx;
     font-family: PingFangSC-Regular;
-    font-size: 14px;
+    font-size: 28rpx;
     color: #666666;
     letter-spacing: 0;
-    line-height: 18px;
+    line-height: 36rpx;
   }
 </style>

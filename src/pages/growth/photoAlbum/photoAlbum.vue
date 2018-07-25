@@ -114,8 +114,8 @@
     min-height: 500rpx;
     height: auto;
     background: #FFFFFF;
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.12);
-    border-radius: 8px;
+    box-shadow: 0 20rpx 40rpx 0 rgba(0,0,0,0.12);
+    border-radius: 16rpx;
     margin: 30rpx 32rpx 40rpx 32rpx;
     padding: 12rpx 20rpx 30rpx 12rpx;
     position : relative;
@@ -131,10 +131,10 @@
     height: 36rpx;
     /*margin: 64rpx 152rpx 16rpx 12rpx;*/
     font-family: PingFangSC-Medium;
-    font-size: 18px;
+    font-size: 36rpx;
     color: #333333;
     letter-spacing: 0;
-    line-height: 18px;
+    line-height: 36rpx;
     /*position: relative;*/
     /*top: 30rpx;*/
   }
@@ -143,10 +143,10 @@
     height: 36rpx;
     /*margin: 0 120rpx 0 12rpx;*/
     font-family: PingFangSC-Regular;
-    font-size: 14px;
+    font-size: 28rpx;
     color: #666666;
     letter-spacing: 0;
-    line-height: 18px;
+    line-height: 36rpx;
     margin-top: 20rpx;
     margin-bottom: 30rpx;
     /*position: relative;*/
