@@ -14,8 +14,6 @@
 </template>
 
 <script>
-// Use Vuex
-import store from '../../store'
 import slide from '@/components/slide'
 import officialPush from '@/components/officialPush'
 export default {
@@ -57,18 +55,13 @@ export default {
     }
   },
   created: function () {
-    let _this = this
-    _this.getUserInfo()
   },
   computed: {
-    userInfo () {
-      return store.state.userInfo
-    }
+  },
+  onShow: function () {
+    // 验证是否已经授权
   },
   methods: {
-    getUserInfo: function () {
-      store.commit('getUserInfo')
-    }
   }
 }
 </script>

@@ -192,7 +192,82 @@ export default {
       city: '城市选择'
     }
   },
-
+  mounted: function () {
+    let _this = this
+    wx.getStorage({
+      key: 'openId',
+      success: function (res) {
+        console.log('查询session成功：' + res)
+        if (res.data) {
+          //  wx.request()
+        } else {
+          wx.login({
+            success: function (resLogin) {
+              if (resLogin.code) {
+                console.log('登录成功' + resLogin.code)
+                let code = resLogin.code
+                _this.$request.post('/wira/wxlogin', {code}).then(resRequest => {
+                  console.log(resRequest)
+                })
+              }
+            }
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res)
+        wx.login({
+          success: function (resLogin) {
+            if (resLogin.code) {
+              console.log('登录成功' + resLogin.code)
+              _this.$request.post('/wira/wxlogin', {code: resLogin.code}).then(data => {
+                console.log(data)
+                if (data.status !== '200') {
+                  wx.showModal({
+                    title: '提示',
+                    content: '检测到您是第一次进入我们小程序，请先注册以方便使用',
+                    cancelText: '再看看',
+                    confirmText: '好去注册',
+                    success: function (res) {
+                      if (res.confirm) {
+                        wx.navigateTo({
+                          url: '../authorize/main'
+                        })
+                      }
+                    }
+                  })
+                }
+              })
+            }
+          }
+        })
+      }
+    })
+    /* wx.getUserInfo({
+      withCredentials: true,
+      success: function (res) {
+        if (res.userInfo.encryptedData) {
+          console.log('登录验证成功' + res.userInfo.encryptedData)
+        } else {
+          wx.showModal({
+            title: '注意',
+            content: '为了您更好的体验,请先同意授权',
+            cancelText: '再看看',
+            confirmText: '好去授权',
+            success: function (res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '../authorize/main'
+                })
+              }
+            }
+          })
+        }
+      }
+    }) */
+  },
+  onShow: function () {
+  },
   methods: {
     // 搜索框方法
     showInput () {
@@ -220,26 +295,6 @@ export default {
       const url = '../logs/main'
       wx.navigateTo({url})
     },
-    /* getUserInfo () {
-      let _this = this
-      wx.checkSession({
-        success: function () {
-          // session_key 未过期，并且在本生命周期一直有效
-        },
-        fail: function () {
-          wx.login({
-            success: () => {
-              wx.getUserInfo({
-                success: (res) => {
-                  _this.userInfo = res.userInfo
-                  // console.log(res)
-                }
-              })
-            }
-          })
-        }
-      })
-    }, */
     // 微信api，获取地理位置
     getLocation () {
       wx.getLocation({
@@ -255,6 +310,7 @@ export default {
             success: function (res) {
               this.location.name = res.name
               this.location.address = res.address
+              console.log(res)
             }
           })
         }
@@ -265,15 +321,13 @@ export default {
     }
   },
   created: function () {
-    // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
-    wx.getSetting({
+    /* wx.getSetting({
       success (res) {
         wx.authorize({
           scope: 'scope.userLocation'
         })
       }
-    })
+    }) */
   }
 }
 </script>

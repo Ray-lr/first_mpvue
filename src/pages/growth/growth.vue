@@ -1,18 +1,18 @@
 <!--成长之路页面-->
 <template>
   <!--绑定style可以使用变量动态控制css属性-->
-  <div  :style="{'height':height_swiper+ 'rpx'}">
+  <div  :style="{'height': height_swiper+'rpx'}">
       <swiper :indicator-dots="indicatorDots" :autoplay="autoPlay" :interval="interval" :duration="duration" :circular="circular"
-              @change="swiperChange" @animationfinish="animationfinish" style="height:100%">
+              @change="swiperChange" @animationfinish="animationfinish" style="height: 100%">
         <div v-for="item in campusInfo" :key="index">
-          <swiper-item class="swiper-item">
+          <swiper-item class="swiper-item" id="swiperItem">
             <!--营员信息（头）-->
             <div style="height: 300rpx">
               <personal-info :info_props_title="item.title" :info_props_badge="item.badge" :info_props_avatar="item.avatar"></personal-info>
             </div>
             <!--<div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7"></div>-->
             <!--三个小标题按钮（营期，相册，评测）-->
-            <div style="height: 240rpx;display: flex;border-style: solid;border-width: 2rpx 0;border-color: #c7c7c7">
+            <div id="1" style="height: 240rpx;display: flex;border-style: solid;border-width: 2rpx 0;border-color: #c7c7c7">
               <img class="bigButton" style="margin: 50rpx 20rpx 50rpx 32rpx" src="http://pics.ctripfair.com/ico_cump.png" @click="navigateToCamp"/>
               <img class="bigButton" style="margin: 50rpx 20rpx" src="http://pics.ctripfair.com/ico_album.png" @click="navigateToAlbum"/>
               <img class="bigButton" style="margin: 50rpx 32rpx 50rpx 20rpx" src="http://pics.ctripfair.com/ico_test.png" @click="navigateToEvaluate"/>
@@ -45,7 +45,7 @@
     },
     data () {
       return {
-        height_swiper: 2000,
+        height_swiper: 1700,
         indicatorDots: true,
         autoPlay: false,
         interval: 5000,
@@ -85,7 +85,10 @@
         ]
       }
     },
-    mounted () {
+    onShow: function () {
+      // 验证是否已经授权
+    },
+    onReady: function () {
     },
     methods: {
       swiperChange (e) {
@@ -96,7 +99,18 @@
       },
       // 点击跟多触发方法，数据库取值并且将滑块高度*2
       more: function (e) {
-        this.height_swiper *= 2
+        let query = wx.createSelectorQuery()
+        query.select('#swiperItem').fields({
+          size: true
+        }, function (res) {
+          console.log(res)
+        })
+        query.exec(function (res) {
+          console.log(res)
+          this.height_swiper = res.height * 2
+          wx.redirectTo({url: './main'})
+        })
+        // this.height_swiper *= 2
         // document.getElementById('outter').style.height = this.height_swiper
       },
       navigateToCamp: function (e) {
@@ -126,7 +140,7 @@
     height:2000rpx;
   }*/
   .swiper-item{
-    height: 100%;
+    height:auto !important;
   }
   .bigButton{
     height: 140rpx;

@@ -26,7 +26,6 @@
 
 <script>
   import personalInfo from '@/components/personalInfo'
-  import store from '../../../store'
   import member from '@/components/mine/members'
   export default {
     components: {
@@ -44,18 +43,10 @@
       }
     },
     created: function () {
-      let _this = this
-      _this.getUserInfo()
     },
     computed: {
-      userInfo () {
-        return store.state.userInfo
-      }
     },
     methods: {
-      getUserInfo: function () {
-        store.commit('getUserInfo')
-      },
       navigate2MyDetails: function () {
         wx.navigateTo({
           url: './campusDetail/main?name=' + this.userInfo.nickName

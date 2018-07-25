@@ -107,9 +107,31 @@
         this.activeIndex = e.currentTarget.id
       },
       navigate2FillOrder: function () {
-        console.log('跳转到填写订单')
-        wx.navigateTo({
-          url: './fillOrder/main?title=' + this.route.title
+        wx.getUserInfo({
+          withCredentials: true,
+          success: function (res) {
+            if (res.userInfo.encryptedData) {
+              console.log('登录验证成功' + res.userInfo.encryptedData)
+              console.log('跳转到填写订单')
+              wx.navigateTo({
+                url: './fillOrder/main?title=' + this.route.title
+              })
+            } else {
+              wx.showModal({
+                title: '注意',
+                content: '预定路线之前需要先确定您的身份,请先同意授权',
+                cancelText: '再看看',
+                confirmText: '好去授权',
+                success: function (res) {
+                  if (res.confirm) {
+                    wx.navigateTo({
+                      url: '/pages/authorize/main'
+                    })
+                  }
+                }
+              })
+            }
+          }
         })
       }
     }

@@ -9,7 +9,7 @@ const store = new Vuex.Store({
   // 声明
   state: {
     count: 0,
-    userInfo: []
+    userInfo: {}
   },
   // 变化
   mutations: {
@@ -20,20 +20,16 @@ const store = new Vuex.Store({
     decrement: (state) => {
       const obj = state
       obj.count -= 1
-    },
-    getUserInfo: (state) => {
+    }
+    /* getUserInfo: (state) => {
       const obj = state
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              obj.userInfo = res.userInfo
-              // console.log(res)
-            }
-          })
+      wx.getUserInfo({
+        success: (res) => {
+          obj.userInfo = res.userInfo
+          console.log('vuex：' + res.userInfo.nickName)
         }
       })
-    }
+    } */
   }
 })
 /*

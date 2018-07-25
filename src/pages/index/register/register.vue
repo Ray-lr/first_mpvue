@@ -50,6 +50,7 @@ export default {
           url: '/pages/index/main',
           success: function () {
             console.log('注册成功')
+            wx.showTabBar()
           }
         })
       } else {

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App'
+import util from './utils/util'
 import 'mp-weui/lib/style.css'
 
+Vue.prototype.$request = util.request
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue(App)
