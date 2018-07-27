@@ -5,7 +5,7 @@
       <p style="font-size: 66rpx;font-weight: bold">{{headTitle}}</p>
     </div>
     <div style="width: 20%;float: right;">
-      <p style="font-size: small;color: aqua;margin-top: 32rpx">查看全部</p>
+      <p style="font-size: small;color: aqua;margin-top: 32rpx" @click="navigateToDetail">查看全部</p>
     </div>
   </div>
 </template>
@@ -15,6 +15,13 @@
       props: ['headTitle'],
       data () {
         return {
+        }
+      },
+      methods: {
+        navigateToDetail: function (e) {
+          wx.navigateTo({
+            url: '/pages/index/proDetail/main?headTitle=' + e.headTitle + '&imgs= ' + e.imgs
+          })
         }
       }
     }

@@ -38,7 +38,7 @@
         id: '1',
         title: '江小白',
         nickName: 'sanzhixiong',
-        avatar: 'http://pics.ctripfair.com/avatar.jpg',
+        avatar: 'http://pics.ctripfair.com/cute1.jpeg',
         campsInfo: [
           {
             img: 'http://pics.ctripfair.com/002cc082-2933-4194-b061-638627f43462',
