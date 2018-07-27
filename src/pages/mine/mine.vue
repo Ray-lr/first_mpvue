@@ -59,7 +59,31 @@
       return {
       }
     },
+    onShow: function () {
+      let _this = this
+      wx.getStorage({
+        key: 'token',
+        success (res) {
+          console.log('查询token成功：' + res.data)
+        },
+        fail (res) {
+          console.log('查询token失败：' + res.data)
+          wx.showToast({
+            title: '检测到您是第一次进入我们小程序，无法进入当前页面，请先注册以方便使用,即将自动跳转...',
+            icon: 'none',
+            duration: 5000,
+            mask: true
+          })
+          setTimeout(_this.navigateToAuthorize, 5000)
+        }
+      })
+    },
     methods: {
+      navigateToAuthorize: function () {
+        wx.navigateTo({
+          url: '/pages/index/authorize/main'
+        })
+      },
       myOrder: function () {
         console.log('navigate to order')
         wx.navigateTo({

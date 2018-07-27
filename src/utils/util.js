@@ -39,10 +39,10 @@ const request = {
               title: '网络出错，稍后再试',
               icon: 'none'
             })
-            console.log(res.statusCode)
+            console.log('服务器返回http请求回应码' + res.statusCode)
             return false
           }
-          console.log(res.statusCode)
+          console.log('服务器返回http请求回应码' + res.statusCode)
           resolve(res.data)
         },
         // 请求失败
@@ -78,10 +78,10 @@ const request = {
               title: '网络出错，稍后再试',
               icon: 'none'
             })
-            console.log(res.statusCode)
+            console.log('服务器返回http请求回应码' + res.statusCode)
             return false
           }
-          console.log(res.statusCode)
+          console.log('服务器返回http请求回应码' + res.statusCode)
           resolve(res.data)
         },
         fail: function (error) {

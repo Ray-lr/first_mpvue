@@ -6,20 +6,6 @@
       <img style="width: 15rpx;height: 26rpx;margin: 30rpx 26rpx" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
     </div>
   </div>
-  <!--weui的list，但样式不太好看-->
-  <!--<div>
-    <div class="weui-cells__title">营员管理</div>
-      <div class="weui-cells weui-cells_after-title">
-        <div v-for="item in member">
-          <div class="weui-cell">
-          <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <div class="weui-cell__bd">{{item.name}}</div>
-            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-          </navigator>
-          </div>
-       </div>
-  </div>
-    </div>-->
 </template>
 
 <script>

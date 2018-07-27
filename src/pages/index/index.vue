@@ -75,30 +75,15 @@
     <div>
       <simple :imgs="imgs_education"></simple>
     </div>
-     <!--测试代码-->
-    <!--<a href="/pages/personal/main" class="counter">去往个人信息页面</a>
-    <a href="/pages/counter/main" class="counter">去往Vue测试页面</a>
-    <div>
-      <button @click="getLocation">click to get location</button>
-    </div>
-    <div>
-      <mp-radio
-        v-model="radioValue"
-        :options="options"
-        :title="单选列表项"
-      />
-    </div>-->
   </div>
 </template>
 
 <script>
-import MpRadio from 'mp-weui/packages/radio'
 import slide from '@/components/slide'
 import littleHead from '@/components/index/little_head'
 import simple from '@/components/index/simple'
 export default {
   components: {
-    MpRadio,
     slide,
     littleHead,
     simple
@@ -195,34 +180,28 @@ export default {
   mounted: function () {
     let _this = this
     wx.getStorage({
-      key: 'openId',
+      key: 'token',
       success: function (res) {
-        console.log('查询session成功：' + res)
-        if (res.data) {
-          //  wx.request()
-        } else {
-          wx.login({
-            success: function (resLogin) {
-              if (resLogin.code) {
-                console.log('登录成功' + resLogin.code)
-                let code = resLogin.code
-                _this.$request.post('/wira/wxlogin', {code}).then(resRequest => {
-                  console.log(resRequest)
-                })
-              }
-            }
-          })
-        }
+        console.log('查询token成功：' + res.data)
       },
       fail: function (res) {
-        console.log(res)
+        console.log(res.errMsg)
         wx.login({
           success: function (resLogin) {
             if (resLogin.code) {
               console.log('登录成功' + resLogin.code)
               _this.$request.post('/wira/wxlogin', {code: resLogin.code}).then(data => {
-                console.log(data)
-                if (data.status !== '200') {
+                console.log('后端传回openId' + data.data.openId)
+                // 将openId存入storage
+                wx.setStorage({
+                  key: 'openId',
+                  data: data.data.openId,
+                  success () {
+                    console.log('openId存储成功')
+                  }
+                })
+                // 在后端查数据库是否有token，没有就弹框跳注册
+                if (!data.data.token) {
                   wx.showModal({
                     title: '提示',
                     content: '检测到您是第一次进入我们小程序，请先注册以方便使用',
@@ -231,9 +210,18 @@ export default {
                     success: function (res) {
                       if (res.confirm) {
                         wx.navigateTo({
-                          url: '../authorize/main'
+                          url: './authorize/main'
                         })
                       }
+                    }
+                  })
+                } else {
+                // 后端已有token并传回，需要放入storage
+                  wx.setStorage({
+                    key: 'token',
+                    data: data.data.token,
+                    success () {
+                      console.log('storage存放token成功:' + data.data.token)
                     }
                   })
                 }
@@ -243,28 +231,6 @@ export default {
         })
       }
     })
-    /* wx.getUserInfo({
-      withCredentials: true,
-      success: function (res) {
-        if (res.userInfo.encryptedData) {
-          console.log('登录验证成功' + res.userInfo.encryptedData)
-        } else {
-          wx.showModal({
-            title: '注意',
-            content: '为了您更好的体验,请先同意授权',
-            cancelText: '再看看',
-            confirmText: '好去授权',
-            success: function (res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '../authorize/main'
-                })
-              }
-            }
-          })
-        }
-      }
-    }) */
   },
   onShow: function () {
   },
@@ -321,13 +287,6 @@ export default {
     }
   },
   created: function () {
-    /* wx.getSetting({
-      success (res) {
-        wx.authorize({
-          scope: 'scope.userLocation'
-        })
-      }
-    }) */
   }
 }
 </script>

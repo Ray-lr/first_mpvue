@@ -35,28 +35,31 @@
 </template>
 
 <script>
-  import store from '../../store'
   export default {
     props: ['info'],
     data () {
       return {
-        infos: []
+        infos: [],
+        userInfo: {
+          nickName: ''
+        }
       }
+    },
+    mounted: function () {
+      let _this = this
+      wx.getStorage({
+        key: 'nickName',
+        success (res) {
+          console.log(res.data.nickName)
+          _this.userInfo.nickName = res.data.nickName
+        }
+      })
     },
     created: function () {
       let _this = this
-      _this.getUserInfo()
-      this.infos = this.info
-    },
-    computed: {
-      userInfo () {
-        return store.state.userInfo
-      }
+      _this.infos = _this.info
     },
     methods: {
-      getUserInfo: function () {
-        store.commit('getUserInfo')
-      }
     }
   }
 </script>

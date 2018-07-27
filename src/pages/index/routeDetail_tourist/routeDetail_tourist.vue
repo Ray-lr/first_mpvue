@@ -107,11 +107,11 @@
         this.activeIndex = e.currentTarget.id
       },
       navigate2FillOrder: function () {
-        wx.getUserInfo({
-          withCredentials: true,
+        wx.getStorage({
+          key: 'token',
           success: function (res) {
-            if (res.userInfo.encryptedData) {
-              console.log('登录验证成功' + res.userInfo.encryptedData)
+            if (res.data) {
+              console.log('获取token成功' + res.data)
               console.log('跳转到填写订单')
               wx.navigateTo({
                 url: './fillOrder/main?title=' + this.route.title
@@ -119,9 +119,9 @@
             } else {
               wx.showModal({
                 title: '注意',
-                content: '预定路线之前需要先确定您的身份,请先同意授权',
+                content: '预定路线之前需要先确定您的身份,请先同意授权并注册',
                 cancelText: '再看看',
-                confirmText: '好去授权',
+                confirmText: '好去注册',
                 success: function (res) {
                   if (res.confirm) {
                     wx.navigateTo({
@@ -131,6 +131,22 @@
                 }
               })
             }
+          },
+          fail (res) {
+            console.log('获取token失败：' + res)
+            wx.showModal({
+              title: '注意',
+              content: '预定路线之前需要先确定您的身份,请先同意授权并注册',
+              cancelText: '再看看',
+              confirmText: '好去注册',
+              success: function (res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '/pages/index/authorize/main'
+                  })
+                }
+              }
+            })
           }
         })
       }
