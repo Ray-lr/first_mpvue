@@ -18,8 +18,8 @@ export default {
       'pages/mine/campusManagement/campusDetail/main', 'pages/mine/campusManagement/campusAdd/main',
       'pages/mine/campusManagement/campusDetail/attention2Me/main', 'pages/index/routeDetail_tourist/main',
       'pages/index/routeDetail_tourist/fillOrder/main', 'pages/growth/campPeriod/main', 'pages/growth/photoAlbum/main',
-      'pages/index/authorize/register/main', 'pages/growth/evaluate/main', 'pages/index/authorize/main' ],
-      'pages/index/register/main', 'pages/growth/evaluate/main', 'pages/index/proDetail/main' ],
+      'pages/index/authorize/register/main', 'pages/growth/evaluate/main', 'pages/index/authorize/main',
+      'pages/index/proDetail/main' ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
