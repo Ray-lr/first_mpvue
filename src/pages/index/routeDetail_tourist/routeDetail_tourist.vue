@@ -107,6 +107,7 @@
         this.activeIndex = e.currentTarget.id
       },
       navigate2FillOrder: function () {
+        let _this = this
         wx.getStorage({
           key: 'token',
           success: function (res) {
@@ -114,7 +115,7 @@
               console.log('获取token成功' + res.data)
               console.log('跳转到填写订单')
               wx.navigateTo({
-                url: './fillOrder/main?title=' + this.route.title
+                url: './fillOrder/main?title=' + _this.route.title
               })
             } else {
               wx.showModal({

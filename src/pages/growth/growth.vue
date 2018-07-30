@@ -1,7 +1,7 @@
 <!--成长之路页面-->
 <template>
   <!--绑定style可以使用变量动态控制css属性-->
-  <div  :style="{'height': height_swiper+'rpx'}">
+  <div  v-bind:style="{'height': height_swiper+'rpx'}">
       <swiper :indicator-dots="indicatorDots" :autoplay="autoPlay" :interval="interval" :duration="duration" :circular="circular"
               @change="swiperChange" @animationfinish="animationfinish" style="height: 100%">
         <div v-for="item in campusInfo" :key="index">
@@ -127,8 +127,8 @@
           console.log(res)
         })
         query.exec(function (res) {
-          console.log(res)
-          this.height_swiper = res.height * 2
+          console.log(res[0].height)
+          this.height_swiper = res[0].height * 2
           wx.redirectTo({url: './main'})
         })
         // this.height_swiper *= 2
