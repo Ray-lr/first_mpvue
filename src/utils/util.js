@@ -63,34 +63,45 @@ const request = {
       title: '加载中'
     })
     return new Promise((resolve, reject) => {
-      wx.request({
-        url: baseUrl + url,
-        data: data,
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json',
-          'charset': 'utf-8'
+      let token = ''
+      wx.getStorage({
+        key: 'token',
+        success (res) {
+          token = res.data
+          wx.request({
+            url: baseUrl + url,
+            data: data,
+            method: 'POST',
+            header: {
+              'Content-Type': 'application/json',
+              'charset': 'utf-8',
+              'Authorization': token
+            },
+            success: function (res) {
+              wx.hideLoading()
+              if (res.statusCode !== 200) {
+                wx.showToast({
+                  title: '网络出错，稍后再试',
+                  icon: 'none'
+                })
+                console.log('服务器返回http请求回应码' + res.statusCode)
+                return false
+              }
+              console.log('服务器返回http请求回应码' + res.statusCode)
+              resolve(res.data)
+            },
+            fail: function (error) {
+              wx.hideLoading()
+              console.log(error)
+              reject(error)
+            },
+            complete: function () {
+              wx.hideLoading()
+            }
+          })
         },
-        success: function (res) {
-          wx.hideLoading()
-          if (res.statusCode !== 200) {
-            wx.showToast({
-              title: '网络出错，稍后再试',
-              icon: 'none'
-            })
-            console.log('服务器返回http请求回应码' + res.statusCode)
-            return false
-          }
-          console.log('服务器返回http请求回应码' + res.statusCode)
-          resolve(res.data)
-        },
-        fail: function (error) {
-          wx.hideLoading()
-          console.log(error)
-          reject(error)
-        },
-        complete: function () {
-          wx.hideLoading()
+        fail () {
+          console.log('请求时获取token失败')
         }
       })
     })

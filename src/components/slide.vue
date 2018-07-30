@@ -5,8 +5,8 @@
           :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
     <div v-for="item in infos" :key="index">
       <swiper-item>
-        <p style="font-size: 60rpx;margin: 10rpx 20rpx;width: 80%">{{item.title}}</p>
-        <img style="margin:0 0rpx;box-shadow:20rpx 20rpx 20rpx #cccccc;" :src="item.img" class="slide-image"/>
+        <p style="font-size: 60rpx;margin: 10rpx 20rpx;width: 80%">{{item.dict_label}}</p>
+        <img style="margin:0 0rpx;box-shadow:20rpx 20rpx 20rpx #cccccc;" :src="item.pic_url" class="slide-image"/>
       </swiper-item>
     </div>
   </swiper>
@@ -22,16 +22,31 @@
         duration: 900,
         circular: true,
         infos: [
-          {title: '五天四晚三亚冲浪营',
-            img: 'http://pics.ctripfair.com/sanya.png'},
-          {title: '九寨沟一周游',
-            img: 'http://www.yanoda.com/App_Assets/Web/Images/img_subject/41.jpg'},
-          {title: '三天三夜森林野营',
-            img: 'http://www.yanoda.com/App_Assets/Web/Images/img_subject/42.jpg'},
-          {title: '拥抱自然，放飞自我',
-            img: 'http://www.yanoda.com/App_Assets/Web/Images/img_subject/44.jpg'}
+          {dict_label: '五天四晚三亚冲浪营',
+            dict_value: '',
+            pic_url: 'http://pics.ctripfair.com/sanya.png'},
+          {dict_label: '九寨沟一周游',
+            dict_value: '',
+            pic_url: 'http://www.yanoda.com/App_Assets/Web/Images/img_subject/41.jpg'},
+          {dict_label: '三天三夜森林野营',
+            dict_value: '',
+            pic_url: 'http://www.yanoda.com/App_Assets/Web/Images/img_subject/42.jpg'},
+          {dict_label: '拥抱自然，放飞自我',
+            dict_value: '',
+            pic_url: 'http://www.yanoda.com/App_Assets/Web/Images/img_subject/44.jpg'}
         ]
       }
+    },
+    mounted: function () {
+      let _this = this
+      _this.$request.post('/dict/getDictData', {dictType: 'THREE_BEAR_KIDS'}).then(data => {
+        // _this.infos.dict_label = data.data
+        /* for (let i = 0; i < data.data.length; i++) {
+          _this.infos[i] = data.data[i]
+        } */
+        _this.infos = data.data
+        console.log(_this.infos)
+      })
     },
     methods: {
       swiperChange (e) {

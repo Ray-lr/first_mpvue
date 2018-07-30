@@ -150,28 +150,6 @@ export default {
       // 搜索框属性
       inputShowed: false,
       inputVal: '',
-      // 测试
-      motto: 'Hello li',
-      userInfo: {},
-      location: {
-        name: '',
-        address: ''
-      },
-      options: [
-        {
-          label: '被禁用',
-          value: 'A',
-          disabled: true
-        },
-        {
-          label: '选项B',
-          value: 'B'
-        },
-        {
-          label: '选项C',
-          value: 'C'
-        }
-      ],
       // 城市选择
       region: ['广东省', '广州市', '海珠区'],
       city: '城市选择'
@@ -183,6 +161,9 @@ export default {
       key: 'token',
       success: function (res) {
         console.log('查询token成功：' + res.data)
+        _this.$request.post('/route/getRouteListByLib', {proType: 'TRAVELWILL_TYPE'}).then(data => {
+          console.log(data)
+        })
       },
       fail: function (res) {
         console.log(res.errMsg)
