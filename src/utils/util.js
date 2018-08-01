@@ -81,13 +81,13 @@ const request = {
               wx.hideLoading()
               if (res.statusCode !== 200) {
                 wx.showToast({
-                  title: '网络出错，稍后再试',
+                  title: '网络出错，请稍后再试',
                   icon: 'none'
                 })
-                console.log('服务器返回http请求回应码' + res.statusCode)
+                console.log('http请求回应码' + res.statusCode)
                 return false
               }
-              console.log('服务器返回http请求回应码' + res.statusCode)
+              console.log('http请求回应码' + res.statusCode)
               resolve(res.data)
             },
             fail: function (error) {
@@ -102,6 +102,7 @@ const request = {
         },
         fail () {
           console.log('请求时获取token失败')
+          wx.hideLoading()
         }
       })
     })

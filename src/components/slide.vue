@@ -40,12 +40,8 @@
     mounted: function () {
       let _this = this
       _this.$request.post('/dict/getDictData', {dictType: 'THREE_BEAR_KIDS'}).then(data => {
-        // _this.infos.dict_label = data.data
-        /* for (let i = 0; i < data.data.length; i++) {
-          _this.infos[i] = data.data[i]
-        } */
         _this.infos = data.data
-        console.log(_this.infos)
+        // console.log(_this.infos)
       })
     },
     methods: {

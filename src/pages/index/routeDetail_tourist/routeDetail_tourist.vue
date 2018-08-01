@@ -6,7 +6,7 @@
       <div style="width: 646rpx;height:602rpx;margin: 20rpx;">
         <img style="width: 646rpx;height:344rpx;" :src="route.url"/>
         <p class="title">{{route.title}}</p>
-        <p class="introduction" style="font-size: 28rpx">简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介</p>
+        <p class="introduction" style="font-size: 28rpx">{{route.introduction}}</p>
         <div class="priceDiv">
           <img style="width: 36rpx;height:36rpx;" src="http://pics.ctripfair.com/ico_seal1.png"/>
           <p class="price" style="font-size: 28rpx">成人：￥<span style="width: 64rpx">{{route.price}}</span>/人 &nbsp &nbsp 儿童：￥<span style="width: 64rpx">{{route.price}}</span>/人</p>
@@ -85,7 +85,7 @@
           title: '',
           url: '',
           price: '',
-          way: ''
+          introduction: ''
         },
         tabs: ['行程安排', '线路特色', '费用说明', '预订须知'],
         activeIndex: 0,
@@ -99,7 +99,7 @@
       _this.route.title = _this.$root.$mp.query.title
       _this.route.url = _this.$root.$mp.query.img
       _this.route.price = _this.$root.$mp.query.price
-      _this.route.way = _this.$root.$mp.query.way
+      _this.route.introduction = _this.$root.$mp.query.introduction
     },
     methods: {
       tabClick (e) {

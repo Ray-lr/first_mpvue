@@ -139,19 +139,33 @@ export default {
     },
     // 检查用户名格式和是否重复
     checkUserName: function () {
+      let _this = this
       let userRex = /^[a-zA-Z0-9_-]{6,16}$/
       let result = userRex.test(this.username)
       if (!result) {
         this.userNameCheck = '账号不规范，请使用6-16位字母数字下划线组合'
       } else {
-        this.$request.post('/user/queryExist', {value: this.username}).then(data => {
-          console.log('后端查询账号是否已存在' + JSON.stringify(data))
-          if (data.data === '1') {
-            this.userNameCheck = '该用户名已存在，请更换'
-          } else if (data.data === '0') {
-            this.userNameCheck = ''
+        wx.request({
+          url: 'https://demo.ctripfair.com/wap/user/queryExist',
+          data: {value: this.username},
+          method: 'post',
+          success (res) {
+            if (res.data.data === '1') {
+              _this.userNameCheck = '该用户名已存在，请更换'
+            } else if (res.data.data === '0') {
+              _this.userNameCheck = ''
+            }
+            console.log(res.data)
           }
         })
+        // this.$request.post('/user/queryExist', {value: this.username}).then(data => {
+        //   console.log('后端查询账号是否已存在' + JSON.stringify(data))
+        //   if (data.data === '1') {
+        //     this.userNameCheck = '该用户名已存在，请更换'
+        //   } else if (data.data === '0') {
+        //     this.userNameCheck = ''
+        //   }
+        // })
       }
     },
     // 检查密码格式

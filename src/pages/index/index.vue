@@ -43,37 +43,14 @@
     <div >
     <slide></slide>
     </div>
-    <!--小标题1-->
-    <div class="littleHead">
-    <little-head headTitle="周末周边"></little-head>
-    </div>
-    <!--图文1-->
-    <div>
-    <simple :imgs="imgs_weekend"></simple>
-    </div>
-    <!--小标题2-->
-    <div class="littleHead">
-      <little-head headTitle="综合成长"></little-head>
-    </div>
-    <!--图文2-->
-    <div>
-      <simple :imgs="imgs_grown"></simple>
-    </div>
-    <!--小标题3-->
-    <div class="littleHead">
-      <little-head headTitle="国际课堂"></little-head>
-    </div>
-    <!--图文3-->
-    <div>
-      <simple :imgs="imgs_international"></simple>
-    </div>
-    <!--小标题4-->
-    <div class="littleHead">
-      <little-head headTitle="营地教育"></little-head>
-    </div>
-    <!--图文4-->
-    <div>
-      <simple :imgs="imgs_education"></simple>
+    <div v-for="(item,index) in info" :key="index">
+      <div class="littleHead">
+        <little-head :headTitle="headTitle[index].dict_label"></little-head>
+      </div>
+      <!--图文1-->
+      <div>
+        <simple :imgs="item"></simple>
+      </div>
     </div>
   </div>
 </template>
@@ -90,62 +67,26 @@ export default {
   },
   data () {
     return {
-      // 子主题图片url
-      imgs_weekend: [
-        {url: 'http://pics.ctripfair.com/weekend1.png',
-          title: '天津|野三坡三天两晚夏令营',
-          way: '8-12岁 儿童独自参团',
-          price: '1000'},
-        {url: 'http://pics.ctripfair.com/weekend2.png',
-          title: '天津|野三坡夏令营',
-          way: '8-12岁 儿童独自参团',
-          price: '2000'},
-        {url: 'http://pics.ctripfair.com/grownup2.png',
-          title: '北京|故宫三日游',
-          way: '5-12岁 家长带领参团',
-          price: '3000'}
+      // 对应数据库的产品类型（跟团游，自驾游等）
+      headTitle: [
+        {dict_label: ''}
       ],
-      imgs_grown: [
-        {url: 'http://pics.ctripfair.com/grownup1.png',
-          title: '北京|北海公园三天',
-          way: '6-15岁 老师带队',
-          price: '800'},
-        {url: 'http://pics.ctripfair.com/grownup2.png',
-          title: '北京|长城七日游',
-          way: '8-16岁 家长跟随',
-          price: '1888'},
-        {url: 'http://pics.ctripfair.com/weekend2.png',
-          title: '泰安|泰山五日游',
-          way: '7-15岁 家长陪同',
-          price: '2888'}
-      ],
-      imgs_international: [
-        {url: 'http://pics.ctripfair.com/international1.png',
-          title: '泰国|曼谷七日游',
-          way: '10-18岁 家长陪同',
-          price: '8888'},
-        {url: 'http://pics.ctripfair.com/international2.png',
-          title: '云南|大理九日游',
-          way: '9-17岁 家长陪同',
-          price: '6888'},
-        {url: 'http://pics.ctripfair.com/weekend1.png',
-          title: '天津|天津野三坡夏令营五日游',
-          way: '8-12岁 家长跟随',
-          price: '1500'}
-      ],
-      imgs_education: [
-        {url: 'http://pics.ctripfair.com/weekend1.png',
-          title: '天津|野三坡三天两晚夏令营',
-          way: '8-12岁 儿童独自参团',
-          price: '1000'},
-        {url: 'http://pics.ctripfair.com/weekend2.png',
-          title: '天津|野三坡夏令营',
-          way: '8-12岁 儿童独自参团',
-          price: '2000'},
-        {url: 'http://pics.ctripfair.com/grownup2.png',
-          title: '北京|故宫三日游',
-          way: '5-12岁 家长带领参团',
-          price: '3000'}
+      oneInfo: {
+        url: '',
+        title: '',
+        introduction: '',
+        price: ''
+      },
+      // 子主题属性
+      info: [
+        [
+          {
+            url: '',
+            title: '',
+            introduction: '',
+            price: ''
+          }
+        ]
       ],
       // 搜索框属性
       inputShowed: false,
@@ -155,15 +96,14 @@ export default {
       city: '城市选择'
     }
   },
-  mounted: function () {
+  created: function () {
     let _this = this
     wx.getStorage({
       key: 'token',
       success: function (res) {
         console.log('查询token成功：' + res.data)
-        _this.$request.post('/route/getRouteListByLib', {proType: 'TRAVELWILL_TYPE'}).then(data => {
-          console.log(data)
-        })
+        _this.selectProduction()
+        console.log(_this.info)
       },
       fail: function (res) {
         console.log(res.errMsg)
@@ -171,40 +111,78 @@ export default {
           success: function (resLogin) {
             if (resLogin.code) {
               console.log('登录成功' + resLogin.code)
-              _this.$request.post('/wira/wxlogin', {code: resLogin.code}).then(data => {
-                console.log('后端传回openId' + data.data.openId)
-                // 将openId存入storage
-                wx.setStorage({
-                  key: 'openId',
-                  data: data.data.openId,
-                  success () {
-                    console.log('openId存储成功')
-                  }
-                })
-                // 在后端查数据库是否有token，没有就弹框跳注册
-                if (!data.data.token) {
-                  wx.showModal({
-                    title: '提示',
-                    content: '检测到您是第一次进入我们小程序，请先注册以方便使用',
-                    cancelText: '再看看',
-                    confirmText: '好去注册',
-                    success: function (res) {
-                      if (res.confirm) {
-                        wx.navigateTo({
-                          url: './authorize/main'
-                        })
-                      }
-                    }
-                  })
-                } else {
-                // 后端已有token并传回，需要放入storage
+              wx.request({
+                url: 'https://demo.ctripfair.com/wap/wira/wxlogin',
+                data: {code: resLogin.code},
+                method: 'post',
+                success (data) {
+                  // 将openId存入storage
                   wx.setStorage({
-                    key: 'token',
-                    data: data.data.token,
+                    key: 'openId',
+                    data: data.data.data.openId,
                     success () {
-                      console.log('storage存放token成功:' + data.data.token)
+                      console.log('openId存储成功：' + data.data.data.openId)
                     }
                   })
+                  if (!data.data.data.token) {
+                    wx.showModal({
+                      title: '提示',
+                      content: '检测到您是第一次进入我们小程序，请先注册以方便使用',
+                      cancelText: '再看看',
+                      confirmText: '好去注册',
+                      success: function (res) {
+                        if (res.confirm) {
+                          wx.navigateTo({
+                            url: './authorize/main'
+                          })
+                        }
+                      }
+                    })
+                  } else {
+                    // 后端已有token并传回，需要放入storage
+                    wx.setStorage({
+                      key: 'token',
+                      data: data.data.data.token,
+                      success () {
+                        console.log('storage存放token成功:' + data.data.data.token)
+                      }
+                    })
+                    _this.selectProduction()
+                  }
+                  // 无论是否有token都要展示首页的数据，封装的请求必须要有token，所以这里单独用了wx.request
+                  // wx.request({
+                  //   url: 'https://demo.ctripfair.com/wap/dict/getDictData',
+                  //   data: {dictType: 'TRAVELWILL_TYPE'},
+                  //   method: 'post',
+                  //   success (resSelectType) {
+                  //     _this.headTitle = resSelectType.data
+                  //     console.log(resSelectType.data)
+                  //     for (let i = 0; i < resSelectType.data.length; i++) {
+                  //       wx.request({
+                  //         url: 'https://demo.ctripfair.com/wap/route/getRouteListByLib',
+                  //         data: {proType: resSelectType.data[i].dict_label},
+                  //         method: 'post',
+                  //         success (data) {
+                  //           if (data.data.data.length > 0) {
+                  //             _this.info[i][0].title = data.data.data[0].proName
+                  //             _this.info[i][0].url = data.data.data[0].proPublicityPic
+                  //             _this.info[i][0].introduction = data.data.data[0].proIntro
+                  //             _this.info[i][0].price = data.data.data[0].priceList.slice(11, 15)
+                  //           }
+                  //           for (let j = 1; j < data.data.data.length; j++) {
+                  //             // 从第二个数据开始，先将处理好的对象赋给oneInfo，然后再将oneInfo push到数组info[i] 最后再将oneInfo置空 方便下次使用
+                  //             _this.oneInfo.title = data.data.data[j].proName
+                  //             _this.oneInfo.url = data.data.data[j].proPublicityPic
+                  //             _this.oneInfo.introduction = data.data.data[j].proIntro
+                  //             _this.oneInfo.price = data.data.data[j].priceList.slice(11, 15)
+                  //             _this.info[i].push(_this.oneInfo)
+                  //             _this.oneInfo = {}
+                  //           }
+                  //         }
+                  //       })
+                  //     }
+                  //   }
+                  // })
                 }
               })
             }
@@ -216,6 +194,55 @@ export default {
   onShow: function () {
   },
   methods: {
+    // 数据库查询产品
+    selectProduction: function () {
+      let _this = this
+      // 查询出行方式（目前5个）
+      _this.$request.post('/dict/getDictData', {dictType: 'TRAVELWILL_TYPE'}).then(dataTitle => {
+        _this.headTitle[0] = dataTitle.data[0]
+        for (let i = 1; i < dataTitle.data.length; i++) {
+          _this.headTitle.push(dataTitle.data[i])
+        }
+        console.log('类别：')
+        console.log(_this.headTitle)
+        // 根据出行方式查询产品
+        for (let i = 0; i < dataTitle.data.length; i++) {
+          _this.$request.post('/route/getRouteListByLib', {proType: _this.headTitle[i].dict_label}).then(data => {
+            // 如果查到有数据，就将第一条赋值到数组info中的第一个对象
+            // console.log(data.data.data)
+            if (data.data.data.length > 0) {
+              if (i === 0) {
+                _this.info[0][0].title = data.data.data[0].proName
+                _this.info[0][0].url = data.data.data[0].proPublicityPic
+                _this.info[0][0].introduction = data.data.data[0].proIntro
+                _this.info[0][0].price = data.data.data[0].priceList.slice(11, 15)
+              } else {
+                // 除了第一个值，其他都没有在data中声明，必须push（创建并添加）
+                let oneArray = [{title: '', url: '', introduction: '', price: ''}]
+                oneArray[0].title = data.data.data[0].proName
+                oneArray[0].url = data.data.data[0].proPublicityPic
+                oneArray[0].introduction = data.data.data[0].proIntro
+                oneArray[0].price = data.data.data[0].priceList.slice(11, 15)
+                _this.info.push(oneArray)
+                oneArray = [{title: '', url: '', introduction: '', price: ''}]
+              }
+            }
+            if (data.data.data.length > 1) {
+              for (let j = 1; j < data.data.data.length; j++) {
+                // 从第二个数据开始，先将处理好的对象赋给oneInfo，然后再将oneInfo push到数组info[i] 最后再将oneInfo置空 方便下次使用
+                _this.oneInfo.title = data.data.data[j].proName
+                _this.oneInfo.url = data.data.data[j].proPublicityPic
+                _this.oneInfo.introduction = data.data.data[j].proIntro
+                _this.oneInfo.price = data.data.data[j].priceList.slice(11, 15)
+                _this.info[i].push(_this.oneInfo)
+                _this.oneInfo = {}
+              }
+            }
+            console.log(_this.headTitle[i].dict_label)
+          })
+        }
+      })
+    },
     // 搜索框方法
     showInput () {
       this.inputShowed = true
@@ -266,8 +293,6 @@ export default {
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     }
-  },
-  created: function () {
   }
 }
 </script>
@@ -289,11 +314,6 @@ export default {
   .littleHead{
     margin: 5% 2% 2% 3%;
   }
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
   .searchbar-result {
     margin-top: 0;
     font-size: 28rpx;
@@ -304,27 +324,4 @@ export default {
   .weui-cell {
     padding: 24rpx 30rpx 24rpx 70rpx;
   }
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 30rpx;
-}
-
-.form-control {
-  display: block;
-  padding: 0 24rpx;
-  margin-bottom: 10rpx;
-  border: 2rpx solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 20rpx auto;
-  padding: 10rpx 20rpx;
-  color: blue;
-  border: 2rpx solid blue;
-}
 </style>
