@@ -40,17 +40,20 @@
     <div class="campersInfo">
       <ul>
         <li>
-          <div class="weui-flex js-category" >
+          <div class="weui-flex js-category" @click="changeCamList">
             <div class="weui-flex-item" >选择营员（多选）</div>
-            <div style="padding-right: 30rpx" id="srcIcon"><img :src="src" class="srcIcon" @click="changeList"/></div>
+            <div  style="padding-right: 40rpx"><img :src="campersSrc" class="srcIcon" /></div>
           </div>
-          <div class="page" id="camperList">
+          <div class="page" v-if="campersVisible">
             <checkbox-group @change="checkboxChange">
               <label class="weui-cell weui-check__label" v-for="item in campers" :key="index">
                 <checkbox class="weui-check" :value="item.value" :checked="item.checked" />
-                <div class="weui-cell__bd" style="display: flex">
-                  <p class="camperName">{{item.name}}</p>
-                  <p class="camperOlder">({{item.older}})</p>
+                <div class="weui-cell__bd">
+                  <div style="width: 250rpx;display: flex;">
+                    <p class="camperName">{{item.name}}</p>
+                    <p class="camperOlder">({{item.older}})</p>
+                  </div>
+
                 </div>
                 <div class="weui-cell__hd weui-check__hd_in-checkbox" v-if="item.checked">
                   <!--<icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!item.checked"></icon>-->
@@ -60,49 +63,74 @@
               </label>
             </checkbox-group>
           </div>
-          <!--<div v-for="item in campers" :key="index" style="padding-top: 26rpx;">-->
-            <!--<div class="camperMember">-->
-              <!--<p class="camperName">{{item.name}}</p>-->
-              <!--<p class="camperOlder">({{item.older}})</p>-->
-            <!--</div>-->
-          <!--</div>-->
         </li>
       </ul>
     </div>
     <div class="outOrder">
       <p class="orderNum">预定房间</p>
-      <div class="innerItem">
-        <div class="manLeft">双标</div>
+      <div class="innerItem" v-for="item in orderRoom" :key="index">
+        <div class="manLeft">{{item}}</div>
         <div class="manRight">
           <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;">-</button>
           <input id="manNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
           <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
         </div>
       </div>
-      <div class="innerItem">
-        <div class="manLeft">大床</div>
-        <div class="manRight">
-          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;">-</button>
-          <input id="childNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
-          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
-        </div>
+    </div>
+    <div class="campersInfo">
+      <ul>
+        <li>
+          <div class="weui-flex js-category" @click="changeHotelList">
+            <div class="weui-flex-item" >酒店类型</div>
+            <div style="padding-right: 40rpx" id="srcIcon"><img :src="hotelSrc" class="srcIcon"/></div>
+          </div>
+          <div class="page" v-if="hotelVisible">
+            <radio-group @change="changeHotel">
+              <label class="weui-cell weui-check__label" v-for="item in hotelType" :key="index">
+                <radio class="weui-check" :value="item.value" :checked="item.checked" />
+                <div class="weui-cell__bd">
+                  <p class="camperName">{{item.type}}</p>
+                </div>
+                <div class="weui-cell__hd weui-check__hd_in-checkbox" v-if="item.checked">
+                  <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                </div>
+              </label>
+            </radio-group>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="campersInfo1">
+      <ul>
+        <li>
+          <div class="weui-flex js-category" @click="changeGatherList">
+            <div class="weui-flex-item" >集合时间地点</div>
+            <div style="padding-right: 40rpx" id="srcIcon"><img :src="gatherSrc" class="srcIcon" /></div>
+          </div>
+          <div class="page" v-if="gatherPlaceVisible">
+            <radio-group @change="changeGatherPlace">
+              <label class="weui-cell weui-check__label" v-for="item in gatherPlace" :key="index">
+                <radio class="weui-check" :value="item.value" :checked="item.checked" />
+                <div class="weui-cell__bd">
+                  <div class="gather">
+                    <p class="gathTime">{{item.gathTime}}&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                    <p class="gathTime">{{item.gathPlace}}</p>
+                  </div>
+                </div>
+                <div class="weui-cell__hd weui-check__hd_in-checkbox" v-if="item.checked">
+                  <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                </div>
+              </label>
+            </radio-group>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="outBtn">
+      <div class="totalPrice">
+        <div class="priceOut">总价：￥<div class="priceInner">{{totalPrice}}</div></div>
       </div>
-      <div class="innerItem">
-        <div class="manLeft">三标</div>
-        <div class="manRight">
-          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;">-</button>
-          <input id="childNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
-          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
-        </div>
-      </div>
-      <div class="innerItem">
-        <div class="manLeft">家庭房</div>
-        <div class="manRight">
-          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;">-</button>
-          <input id="childNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
-          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
-        </div>
-      </div>
+      <button class="alipay">立即支付</button>
     </div>
   </div>
 </template>
@@ -125,8 +153,27 @@ export default {
         {name: '江爸爸', older: '成人', value: '1', checked: false},
         {name: '江妈妈', older: '成人', value: '2', checked: false}
       ],
-      src: 'http://pics.ctripfair.com/icon_more_def.png',
-      type: false
+      hotelType: [
+        {type: '三星级酒店', value: 'a', checked: false},
+        {type: '四星级酒店', value: 'b', checked: false},
+        {type: '五星级酒店', value: 'c', checked: false}
+      ],
+      gatherPlace: [
+        {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '06:30', value: 'A', checked: false},
+        {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '07:30', value: 'B', checked: false},
+        {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '08:30', value: 'C', checked: false}
+      ],
+      orderRoom: [
+        '双标', '大床', '三标', '家庭房'
+      ],
+      campersSrc: 'http://pics.ctripfair.com/icon_more_def.png',
+      hotelSrc: 'http://pics.ctripfair.com/icon_more_def.png',
+      gatherSrc: 'http://pics.ctripfair.com/icon_more_def.png',
+      type: false,
+      totalPrice: 0,
+      campersVisible: false,
+      gatherPlaceVisible: false,
+      hotelVisible: false
     }
   },
   mounted: function () {
@@ -148,7 +195,34 @@ export default {
       }
       this.campers = campers
     },
-    changeList: function () {
+    changeHotel: function (e) {
+      let hotelType = this.hotelType
+      for (let i = 0; i < hotelType.length; i++) {
+        hotelType[i].checked = hotelType[i].value === e.mp.detail.value
+      }
+      this.hotelType = hotelType
+    },
+    changeGatherPlace: function (e) {
+      let gatherPlace = this.gatherPlace
+      for (let i = 0; i < gatherPlace.length; i++) {
+        gatherPlace[i].checked = gatherPlace[i].value === e.mp.detail.value
+      }
+      this.gatherPlace = gatherPlace
+    },
+    changeCamList: function () {
+      let _this = this
+      _this.campersVisible = !_this.campersVisible
+      _this.campersSrc = _this.campersSrc === ('http://pics.ctripfair.com/icon_more_def.png') ? ('http://pics.ctripfair.com/icon_more_pre.png') : ('http://pics.ctripfair.com/icon_more_def.png')
+    },
+    changeHotelList: function () {
+      let _this = this
+      _this.hotelVisible = !_this.hotelVisible
+      _this.hotelSrc = _this.hotelSrc === ('http://pics.ctripfair.com/icon_more_def.png') ? ('http://pics.ctripfair.com/icon_more_pre.png') : ('http://pics.ctripfair.com/icon_more_def.png')
+    },
+    changeGatherList: function () {
+      let _this = this
+      _this.gatherPlaceVisible = !_this.gatherPlaceVisible
+      _this.gatherSrc = _this.gatherSrc === ('http://pics.ctripfair.com/icon_more_def.png') ? ('http://pics.ctripfair.com/icon_more_pre.png') : ('http://pics.ctripfair.com/icon_more_def.png')
     },
     decreaseBtn: function () {
     }
@@ -284,7 +358,11 @@ export default {
     width: 138rpx;
     height: 50rpx;
     text-align: center;
-    font-size: 32rpx;
+    font-size: 36rpx;
+    font-family: PingFangSC-Medium;
+    color: #333333;
+    letter-spacing: 0;
+    line-height: 36rpx;
   }
   .campersInfo{
     width: 686rpx;
@@ -292,6 +370,15 @@ export default {
     box-shadow: 0 10rpx 36rpx 0 rgba(0,0,0,0.12);
     border-radius: 16rpx;
     margin: auto 32rpx 20rpx 32rpx;
+    padding-top: 10rpx;
+    padding-bottom: 30rpx;
+  }
+  .campersInfo1{
+    width: 686rpx;
+    background: #FFFFFF;
+    box-shadow: 0 10rpx 36rpx 0 rgba(0,0,0,0.12);
+    border-radius: 16rpx;
+    margin: 40rpx 32rpx 120rpx 32rpx;
     padding-top: 10rpx;
     padding-bottom: 30rpx;
   }
@@ -310,17 +397,8 @@ export default {
     display: block;
     margin: 0 10rpx
   }
-  .camperMember{
-    width: 654rpx;
-    height: 60rpx;
-    background: #FFFFFF;
-    box-shadow: inset 0 0 0 0 #BCBBC1;
-    margin-left: 32rpx;
-    border-bottom: 1rpx solid #c7c7c7;
-    display: flex;
-  }
   .camperName{
-    width: 100rpx;
+    width: 150rpx;
     height: 44rpx;
     font-family: PingFangSC-Semibold;
     font-size: 32rpx;
@@ -329,7 +407,7 @@ export default {
     line-height: 44rpx;
   }
   .camperOlder{
-    width: 110rpx;
+    width: 100rpx;
     height: 40rpx;
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
@@ -341,5 +419,63 @@ export default {
     height: 36rpx;
     float: right;
     margin-left: 20rpx;
+  }
+  .gathTime{
+
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #000000;
+  }
+  .gather{
+    width: 550rpx;
+    letter-spacing: -0.82rpx;
+    line-height: 44rpx;
+    display: flex;
+  }
+  .totalPrice{
+    width: 376rpx;
+    height: 98rpx;
+    background: #FFFFFF;
+    display: flex;
+    float: left;
+    /*padding: 16rpx 64rpx;*/
+  }
+  .priceInner{
+    width: 100rpx;
+    height: 44rpx;
+    font-family: PingFangSC-Medium;
+    font-size: 48rpx;
+    color: #23C8DA;
+    letter-spacing: 0.34rpx;
+    line-height: 44rpx;
+    margin-top: 6rpx;
+  }
+  .priceOut{
+    width: 234rpx;
+    height: 66rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 32rpx;
+    color: #333333;
+    letter-spacing: 0.38rpx;
+    display: flex;
+    margin-left: 64rpx;
+    margin-top: 16rpx;
+
+  }
+  .alipay{
+    width: 375rpx;
+    height: 98rpx;
+    background-image: linear-gradient(-180deg, #68F2FA 0%, #23C8DA 82%);
+    float: right;
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #FFFFFF;
+    letter-spacing: 0.44rpx;
+  }
+  .outBtn{
+    width: 750rpx;
+    height: 98rpx;
+    bottom: 0;
+    position: fixed;
   }
 </style>
