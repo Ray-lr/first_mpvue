@@ -23,17 +23,17 @@
       <div class="innerItem">
         <div class="manLeft">成人</div>
         <div class="manRight">
-          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn">-</button>
-          <input id="manNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
-          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
+          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(0)">-</button>
+          <input id="manNum" type="number" disabled="true" min="0" max="10" :value="roomNum.manNum" class="numInp"/>
+          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(0)">+</button>
         </div>
       </div>
       <div class="innerItem">
         <div class="manLeft">儿童</div>
         <div class="manRight">
-          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;">-</button>
-          <input id="childNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
-          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
+          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(1)">-</button>
+          <input id="childNum" type="number" disabled="true" min="0" :value="roomNum.childNum" class="numInp"/>
+          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(1)">+</button>
         </div>
       </div>
     </div>
@@ -68,12 +68,36 @@
     </div>
     <div class="outOrder">
       <p class="orderNum">预定房间</p>
-      <div class="innerItem" v-for="item in orderRoom" :key="index">
-        <div class="manLeft">{{item}}</div>
+      <div class="innerItem">
+        <div class="manLeft">双标</div>
         <div class="manRight">
-          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;">-</button>
-          <input id="manNum" type="number" disabled="true" min="0" value="0" class="numInp"/>
-          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;">+</button>
+          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(2)">-</button>
+          <input id="doubleRoom" type="number" disabled="true" min="0" :value="roomNum.doubleRoom" class="numInp"/>
+          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(2)">+</button>
+        </div>
+      </div>
+      <div class="innerItem">
+        <div class="manLeft">大床</div>
+        <div class="manRight">
+          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(3)">-</button>
+          <input id="bigRoom" type="number" disabled="true" min="0" :value="roomNum.bigRoom" class="numInp"/>
+          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(3)">+</button>
+        </div>
+      </div>
+      <div class="innerItem">
+        <div class="manLeft">三标</div>
+        <div class="manRight">
+          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(4)">-</button>
+          <input id="threeRoom" type="number" disabled="true" min="0" :value="roomNum.threeRoom" class="numInp"/>
+          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(4)">+</button>
+        </div>
+      </div>
+      <div class="innerItem">
+        <div class="manLeft">家庭房</div>
+        <div class="manRight">
+          <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(5)">-</button>
+          <input id="familyRoom" type="number" disabled="true" min="0" :value="roomNum.familyRoom" class="numInp"/>
+          <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(5)">+</button>
         </div>
       </div>
     </div>
@@ -130,7 +154,7 @@
       <div class="totalPrice">
         <div class="priceOut">总价：￥<div class="priceInner">{{totalPrice}}</div></div>
       </div>
-      <button class="alipay">立即支付</button>
+     <button class="alipay">立即支付</button>
     </div>
   </div>
 </template>
@@ -141,6 +165,14 @@ export default {
     return {
       order: {
         title: ''
+      },
+      roomNum: {
+        manNum: 0,
+        childNum: 0,
+        doubleRoom: 0,
+        bigRoom: 0,
+        threeRoom: 0,
+        familyRoom: 0
       },
       price: [
         '5000',
@@ -162,9 +194,6 @@ export default {
         {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '06:30', value: 'A', checked: false},
         {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '07:30', value: 'B', checked: false},
         {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '08:30', value: 'C', checked: false}
-      ],
-      orderRoom: [
-        '双标', '大床', '三标', '家庭房'
       ],
       campersSrc: 'http://pics.ctripfair.com/icon_more_def.png',
       hotelSrc: 'http://pics.ctripfair.com/icon_more_def.png',
@@ -224,7 +253,135 @@ export default {
       _this.gatherPlaceVisible = !_this.gatherPlaceVisible
       _this.gatherSrc = _this.gatherSrc === ('http://pics.ctripfair.com/icon_more_def.png') ? ('http://pics.ctripfair.com/icon_more_pre.png') : ('http://pics.ctripfair.com/icon_more_def.png')
     },
-    decreaseBtn: function () {
+    decreaseBtn: function (e) {
+      let _this = this
+      switch (e) {
+        case 0:
+          wx.createSelectorQuery().select('#manNum').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            let ret = parseInt(res[0].value)
+            if (ret === 0) {
+              _this.roomNum.manNum = 0
+            } else {
+              _this.roomNum.manNum = ret - 1
+            }
+          })
+          break
+        case 1:
+          wx.createSelectorQuery().select('#childNum').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            let ret = parseInt(res[0].value)
+            if (ret === 0) {
+              _this.roomNum.childNum = 0
+            } else {
+              _this.roomNum.childNum = ret - 1
+            }
+          })
+          break
+        case 2:
+          wx.createSelectorQuery().select('#doubleRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            let ret = parseInt(res[0].value)
+            if (ret === 0) {
+              _this.roomNum.doubleRoom = 0
+            } else {
+              _this.roomNum.doubleRoom = ret - 1
+            }
+          })
+          break
+        case 3:
+          wx.createSelectorQuery().select('#bigRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            let ret = parseInt(res[0].value)
+            if (ret === 0) {
+              _this.roomNum.bigRoom = 0
+            } else {
+              _this.roomNum.bigRoom = ret - 1
+            }
+          })
+          break
+        case 4:
+          wx.createSelectorQuery().select('#threeRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            let ret = parseInt(res[0].value)
+            if (ret === 0) {
+              _this.roomNum.threeRoom = 0
+            } else {
+              _this.roomNum.threeRoom = ret - 1
+            }
+          })
+          break
+        case 5:
+          wx.createSelectorQuery().select('#familyRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            let ret = parseInt(res[0].value)
+            if (ret === 0) {
+              _this.roomNum.familyRoom = 0
+            } else {
+              _this.roomNum.familyRoom = ret - 1
+            }
+          })
+          break
+      }
+    },
+    addBtn: function (e) {
+      let _this = this
+      switch (e) {
+        case 0:
+          wx.createSelectorQuery().select('#manNum').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            res.value = parseInt(res[0].value) + 1
+            _this.roomNum.manNum = res.value
+          })
+          break
+        case 1:
+          wx.createSelectorQuery().select('#childNum').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            res.value = parseInt(res[0].value) + 1
+            _this.roomNum.childNum = res.value
+          })
+          break
+        case 2:
+          wx.createSelectorQuery().select('#doubleRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            res.value = parseInt(res[0].value) + 1
+            _this.roomNum.doubleRoom = res.value
+          })
+          break
+        case 3:
+          wx.createSelectorQuery().select('#bigRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            res.value = parseInt(res[0].value) + 1
+            _this.roomNum.bigRoom = res.value
+          })
+          break
+        case 4:
+          wx.createSelectorQuery().select('#threeRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            res.value = parseInt(res[0].value) + 1
+            _this.roomNum.threeRoom = res.value
+          })
+          break
+        case 5:
+          wx.createSelectorQuery().select('#familyRoom').fields({
+            properties: ['value']
+          }).exec(function (res) {
+            res.value = parseInt(res[0].value) + 1
+            _this.roomNum.familyRoom = res.value
+          })
+          break
+      }
     }
   }
 }
@@ -360,7 +517,7 @@ export default {
     text-align: center;
     font-size: 36rpx;
     font-family: PingFangSC-Medium;
-    color: #333333;
+    color: #666666;
     letter-spacing: 0;
     line-height: 36rpx;
   }
