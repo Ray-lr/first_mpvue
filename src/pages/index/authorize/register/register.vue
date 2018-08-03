@@ -89,39 +89,81 @@ export default {
     addSubmit: function () {
       if (this.userNameCheck === '' && this.passwordCheck === '' && this.password_confirmCheck === '' && this.phoneCheck === '') {
         let md5Password = md5(this.password)
-        this.$request.post('/wira/register', {
-          name: this.nickName,
-          avatar: this.avatarUrl,
-          openId: this.openId,
-          loginCode: this.username,
-          password: md5Password,
-          mobile: this.phone
-        }).then(data => {
-          console.log('message' + data.message)
-          console.log('datastring' + JSON.stringify(data))
-          if (data.status === '200') {
-            wx.setStorage({
-              key: 'token',
-              data: data.data.id,
-              success () {
-                console.log('注册后token存入storage成功！' + data.data.id)
-              }
-            })
-            wx.showToast({
-              title: '恭喜注册成功！',
-              icon: 'success',
-              duration: 2000
-            })
-            wx.switchTab({
-              url: '/pages/index/main',
-              success: function () {
-                console.log('注册成功')
-              }
-            })
-          } else {
-            console.log('注册失败，错代码：' + data.status + data.message + data.data)
+        wx.request({
+          url: 'https://demo.ctripfair.com/wap/wira/register',
+          data: {
+            name: this.nickName,
+            avatar: this.avatarUrl,
+            openId: this.openId,
+            loginCode: this.username,
+            password: md5Password,
+            mobile: this.phone
+          },
+          method: 'post',
+          success (data) {
+            console.log('注册请求成功')
+            console.log(data)
+            if (data.data.status === '200') {
+              wx.setStorage({
+                key: 'token',
+                data: data.data.data.id,
+                success () {
+                  console.log('注册后token存入storage成功！' + data.data.data.id)
+                }
+              })
+              setTimeout(function () {
+                wx.showToast({
+                  title: '恭喜注册成功！',
+                  icon: 'success',
+                  duration: 3000,
+                  mask: true
+                })
+              }, 4000)
+              wx.switchTab({
+                url: '/pages/index/main',
+                success: function () {
+                  console.log('注册成功')
+                }
+              })
+            } else {
+              console.log('注册失败，错代码：')
+              console.log(data)
+            }
           }
         })
+        // this.$request.post('/wira/register', {
+        //   name: this.nickName,
+        //   avatar: this.avatarUrl,
+        //   openId: this.openId,
+        //   loginCode: this.username,
+        //   password: md5Password,
+        //   mobile: this.phone
+        // }).then(data => {
+        //   console.log('message' + data.message)
+        //   console.log('datastring' + JSON.stringify(data))
+        //   if (data.status === '200') {
+        //     wx.setStorage({
+        //       key: 'token',
+        //       data: data.data.id,
+        //       success () {
+        //         console.log('注册后token存入storage成功！' + data.data.id)
+        //       }
+        //     })
+        //     wx.showToast({
+        //       title: '恭喜注册成功！',
+        //       icon: 'success',
+        //       duration: 2000
+        //     })
+        //     wx.switchTab({
+        //       url: '/pages/index/main',
+        //       success: function () {
+        //         console.log('注册成功')
+        //       }
+        //     })
+        //   } else {
+        //     console.log('注册失败，错代码：' + data.status + data.message + data.data)
+        //   }
+        // })
       } else {
         wx.showModal({
           title: '错误',

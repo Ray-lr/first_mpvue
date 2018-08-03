@@ -132,13 +132,15 @@ export default {
       city: '城市选择'
     }
   },
-  created: function () {
+  onShow: function () {
     let _this = this
     wx.getStorage({
       key: 'token',
       success: function (res) {
         console.log('查询token成功：' + res.data)
-        _this.selectProduction()
+        if (_this.headTitle[0].dict_label === '') {
+          _this.selectProduction()
+        }
         // console.log(_this.info)
       },
       fail: function (res) {
@@ -184,7 +186,9 @@ export default {
                       }
                     })
                     // 存储完token证明已注册过，查询产品
-                    _this.selectProduction()
+                    if (_this.headTitle[0].dict_label === '') {
+                      _this.selectProduction()
+                    }
                   }
                 }
               })
@@ -193,8 +197,6 @@ export default {
         })
       }
     })
-  },
-  onShow: function () {
   },
   methods: {
     // 数据库查询产品
