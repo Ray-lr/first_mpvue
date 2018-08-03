@@ -69,6 +69,10 @@ export default {
     return {
       // 对应数据库的产品类型（跟团游，自驾游等）
       headTitle: [
+        {dict_label: ''},
+        {dict_label: ''},
+        {dict_label: ''},
+        {dict_label: ''},
         {dict_label: ''}
       ],
       oneInfo: {
@@ -79,6 +83,38 @@ export default {
       },
       // 子主题属性
       info: [
+        [
+          {
+            url: '',
+            title: '',
+            introduction: '',
+            price: ''
+          }
+        ],
+        [
+          {
+            url: '',
+            title: '',
+            introduction: '',
+            price: ''
+          }
+        ],
+        [
+          {
+            url: '',
+            title: '',
+            introduction: '',
+            price: ''
+          }
+        ],
+        [
+          {
+            url: '',
+            title: '',
+            introduction: '',
+            price: ''
+          }
+        ],
         [
           {
             url: '',
@@ -103,7 +139,7 @@ export default {
       success: function (res) {
         console.log('查询token成功：' + res.data)
         _this.selectProduction()
-        console.log(_this.info)
+        // console.log(_this.info)
       },
       fail: function (res) {
         console.log(res.errMsg)
@@ -147,42 +183,9 @@ export default {
                         console.log('storage存放token成功:' + data.data.data.token)
                       }
                     })
+                    // 存储完token证明已注册过，查询产品
                     _this.selectProduction()
                   }
-                  // 无论是否有token都要展示首页的数据，封装的请求必须要有token，所以这里单独用了wx.request
-                  // wx.request({
-                  //   url: 'https://demo.ctripfair.com/wap/dict/getDictData',
-                  //   data: {dictType: 'TRAVELWILL_TYPE'},
-                  //   method: 'post',
-                  //   success (resSelectType) {
-                  //     _this.headTitle = resSelectType.data
-                  //     console.log(resSelectType.data)
-                  //     for (let i = 0; i < resSelectType.data.length; i++) {
-                  //       wx.request({
-                  //         url: 'https://demo.ctripfair.com/wap/route/getRouteListByLib',
-                  //         data: {proType: resSelectType.data[i].dict_label},
-                  //         method: 'post',
-                  //         success (data) {
-                  //           if (data.data.data.length > 0) {
-                  //             _this.info[i][0].title = data.data.data[0].proName
-                  //             _this.info[i][0].url = data.data.data[0].proPublicityPic
-                  //             _this.info[i][0].introduction = data.data.data[0].proIntro
-                  //             _this.info[i][0].price = data.data.data[0].priceList.slice(11, 15)
-                  //           }
-                  //           for (let j = 1; j < data.data.data.length; j++) {
-                  //             // 从第二个数据开始，先将处理好的对象赋给oneInfo，然后再将oneInfo push到数组info[i] 最后再将oneInfo置空 方便下次使用
-                  //             _this.oneInfo.title = data.data.data[j].proName
-                  //             _this.oneInfo.url = data.data.data[j].proPublicityPic
-                  //             _this.oneInfo.introduction = data.data.data[j].proIntro
-                  //             _this.oneInfo.price = data.data.data[j].priceList.slice(11, 15)
-                  //             _this.info[i].push(_this.oneInfo)
-                  //             _this.oneInfo = {}
-                  //           }
-                  //         }
-                  //       })
-                  //     }
-                  //   }
-                  // })
                 }
               })
             }
@@ -199,33 +202,20 @@ export default {
       let _this = this
       // 查询出行方式（目前5个）
       _this.$request.post('/dict/getDictData', {dictType: 'TRAVELWILL_TYPE'}).then(dataTitle => {
-        _this.headTitle[0] = dataTitle.data[0]
-        for (let i = 1; i < dataTitle.data.length; i++) {
-          _this.headTitle.push(dataTitle.data[i])
-        }
-        console.log('类别：')
-        console.log(_this.headTitle)
-        // 根据出行方式查询产品
         for (let i = 0; i < dataTitle.data.length; i++) {
+          _this.headTitle[i] = dataTitle.data[i]
+        }
+        // 根据出行方式查询产品
+        for (let i = 0; i < _this.headTitle.length; i++) {
           _this.$request.post('/route/getRouteListByLib', {proType: _this.headTitle[i].dict_label}).then(data => {
             // 如果查到有数据，就将第一条赋值到数组info中的第一个对象
-            // console.log(data.data.data)
             if (data.data.data.length > 0) {
-              if (i === 0) {
-                _this.info[0][0].title = data.data.data[0].proName
-                _this.info[0][0].url = data.data.data[0].proPublicityPic
-                _this.info[0][0].introduction = data.data.data[0].proIntro
-                _this.info[0][0].price = data.data.data[0].priceList.slice(11, 15)
-              } else {
-                // 除了第一个值，其他都没有在data中声明，必须push（创建并添加）
-                let oneArray = [{title: '', url: '', introduction: '', price: ''}]
-                oneArray[0].title = data.data.data[0].proName
-                oneArray[0].url = data.data.data[0].proPublicityPic
-                oneArray[0].introduction = data.data.data[0].proIntro
-                oneArray[0].price = data.data.data[0].priceList.slice(11, 15)
-                _this.info.push(oneArray)
-                oneArray = [{title: '', url: '', introduction: '', price: ''}]
-              }
+              _this.info[i][0].title = data.data.data[0].proName
+              _this.info[i][0].url = data.data.data[0].proPublicityPic
+              _this.info[i][0].introduction = data.data.data[0].proIntro
+              let temp = data.data.data[0].priceList.split(':')[1]
+              _this.info[i][0].price = temp.split(',')[0]
+              temp = []
             }
             if (data.data.data.length > 1) {
               for (let j = 1; j < data.data.data.length; j++) {
@@ -233,12 +223,13 @@ export default {
                 _this.oneInfo.title = data.data.data[j].proName
                 _this.oneInfo.url = data.data.data[j].proPublicityPic
                 _this.oneInfo.introduction = data.data.data[j].proIntro
-                _this.oneInfo.price = data.data.data[j].priceList.slice(11, 15)
+                let temp = data.data.data[0].priceList.split(':')[1]
+                _this.oneInfo.price = temp.split(',')[0]
+                temp = []
                 _this.info[i].push(_this.oneInfo)
                 _this.oneInfo = {}
               }
             }
-            console.log(_this.headTitle[i].dict_label)
           })
         }
       })

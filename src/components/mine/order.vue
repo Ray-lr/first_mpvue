@@ -26,7 +26,7 @@
   </div>
   <!--下单信息-->
   <div class="order_user_div">
-    <p class="order_user">{{userInfo.nickName}}</p>
+    <p class="order_user"><open-data type="userNickName"></open-data></p>
     <p class="order_user">15236597137</p>
     <p class="order_time" style="text-align: right">下单时间：{{item.orderTime}}</p>
   </div>
