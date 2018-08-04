@@ -76,6 +76,7 @@ export default {
         {dict_label: ''}
       ],
       oneInfo: {
+        id: '',
         url: '',
         title: '',
         introduction: '',
@@ -85,6 +86,7 @@ export default {
       info: [
         [
           {
+            id: '',
             url: '',
             title: '',
             introduction: '',
@@ -93,6 +95,7 @@ export default {
         ],
         [
           {
+            id: '',
             url: '',
             title: '',
             introduction: '',
@@ -101,6 +104,7 @@ export default {
         ],
         [
           {
+            id: '',
             url: '',
             title: '',
             introduction: '',
@@ -109,6 +113,7 @@ export default {
         ],
         [
           {
+            id: '',
             url: '',
             title: '',
             introduction: '',
@@ -117,6 +122,7 @@ export default {
         ],
         [
           {
+            id: '',
             url: '',
             title: '',
             introduction: '',
@@ -212,6 +218,7 @@ export default {
           _this.$request.post('/route/getRouteListByLib', {proType: _this.headTitle[i].dict_label}).then(data => {
             // 如果查到有数据，就将第一条赋值到数组info中的第一个对象
             if (data.data.data.length > 0) {
+              _this.info[i][0].id = data.data.data[0].proNum
               _this.info[i][0].title = data.data.data[0].proName
               _this.info[i][0].url = data.data.data[0].proPublicityPic
               _this.info[i][0].introduction = data.data.data[0].proIntro
@@ -222,6 +229,7 @@ export default {
             if (data.data.data.length > 1) {
               for (let j = 1; j < data.data.data.length; j++) {
                 // 从第二个数据开始，先将处理好的对象赋给oneInfo，然后再将oneInfo push到数组info[i] 最后再将oneInfo置空 方便下次使用
+                _this.oneInfo.id = data.data.data[j].proNum
                 _this.oneInfo.title = data.data.data[j].proName
                 _this.oneInfo.url = data.data.data[j].proPublicityPic
                 _this.oneInfo.introduction = data.data.data[j].proIntro

@@ -55,15 +55,15 @@
         </div>
         <!--线路特色的内容-->
         <div class="weui-tab__content" :hidden="activeIndex != 1">
-
+          <p>{{routeDetail.proFeatures}}</p>
         </div>
         <!--费用说明的内容-->
         <div class="weui-tab__content" :hidden="activeIndex != 2">
-
+          <p>{{routeDetail.proCostDescription}}</p>
         </div>
         <!--预订须知的内容-->
         <div class="weui-tab__content" :hidden="activeIndex != 3">
-
+          <p>{{routeDetail.proOrderNotice}}</p>
         </div>
       </div>
     </div>
@@ -82,6 +82,7 @@
     data () {
       return {
         route: {
+          id: '',
           title: '',
           url: '',
           price: '',
@@ -89,17 +90,26 @@
         },
         tabs: ['行程安排', '线路特色', '费用说明', '预订须知'],
         activeIndex: 0,
-        fontSize: 30
+        fontSize: 30,
+        // 产品信息
+        // 费用说明：proCostDescription  产品特色：proFeatures  预订须知：proOrderNotice
+        // 交通形式：mainTraffic 目的地：proDestination
+        routeDetail: {}
       }
     },
     computed: {
     },
     mounted: function () {
       let _this = this
+      _this.route.id = _this.$root.$mp.query.id
       _this.route.title = _this.$root.$mp.query.title
       _this.route.url = _this.$root.$mp.query.img
       _this.route.price = _this.$root.$mp.query.price
       _this.route.introduction = _this.$root.$mp.query.introduction
+      _this.$request.post('/route/getRouteProductDetail/' + _this.route.id, {}).then(data => {
+        _this.routeDetail = data.data.routeProEntity
+        console.log(_this.routeDetail)
+      })
     },
     methods: {
       tabClick (e) {
@@ -217,7 +227,7 @@
     line-height: 44rpx;
   }
   .weui-tab__content {
-    margin: 0 32rpx;
+    margin: 0 32rpx 120rpx 32rpx;
     width: 686rpx;
     padding-top: 60rpx;
     text-align: center;

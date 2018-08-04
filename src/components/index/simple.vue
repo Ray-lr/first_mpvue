@@ -6,6 +6,7 @@
             :duration="duration" :circular="circular" display-multiple-items="2" @change="swiperChange" @animationfinish="animationfinish">
       <div v-for="item in params" :key="index" @click="routeDetail(item)" style="margin-left: 10rpx">
         <swiper-item>
+          <input :value="item.id " style="display: none"/>
           <img :src="item.url" class="slide-image"/>
             <p class="smallTitle">{{item.title}}</p>
             <p class="wayIn smallTitle">{{item.introduction}}</p>
@@ -55,13 +56,13 @@
       created: function () {
         if (this.imgs.length > 0) {
           this.params = this.imgs
-          // console.log(this.params)
+          console.log(this.params)
         }
       },
       methods: {
         routeDetail: function (e) {
           wx.navigateTo({
-            url: './routeDetail_tourist/main?title=' + e.title + '&price=' + e.price + '&introduction=' + e.introduction + '&img=' + e.url
+            url: './routeDetail_tourist/main?title=' + e.title + '&id=' + e.id + '&price=' + e.price + '&introduction=' + e.introduction + '&img=' + e.url
           })
           // console.log(e)
         }

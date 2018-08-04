@@ -115,8 +115,7 @@ export default {
                 wx.showToast({
                   title: '恭喜注册成功！',
                   icon: 'success',
-                  duration: 3000,
-                  mask: true
+                  duration: 3000
                 })
               }, 4000)
               wx.switchTab({
