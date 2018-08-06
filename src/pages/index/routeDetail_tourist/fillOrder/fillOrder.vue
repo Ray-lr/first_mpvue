@@ -5,9 +5,10 @@
       <p class="subtitle">{{order.title}}</p>
       <p class="introduction">简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介</p>
     </div>
+    <calendar></calendar>
     <!--滚动条-->
     <div class="scroll">
-      <div class="item" v-for="item in price">
+      <div class="item" v-for="item in price" :key="index">
         <div style="display: flex">
           <p style="margin: 44rpx 0rpx 4rpx 42rpx">￥</p>
           <p class="price">{{item}}</p>
@@ -24,7 +25,7 @@
         <div class="manLeft">成人</div>
         <div class="manRight">
           <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(0)">-</button>
-          <input id="manNum" type="number" disabled="true" min="0" max="10" :value="roomNum.manNum" class="numInp"/>
+          <input id="manNum" type="number" disabled="true" min="0" max="10" v-model="roomNum.manNum" class="numInp"/>
           <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(0)">+</button>
         </div>
       </div>
@@ -32,7 +33,7 @@
         <div class="manLeft">儿童</div>
         <div class="manRight">
           <button type="button" class="decBtn" style="border-right: 1rpx solid #c7c7c7;" @click="decreaseBtn(1)">-</button>
-          <input id="childNum" type="number" disabled="true" min="0" :value="roomNum.childNum" class="numInp"/>
+          <input id="childNum" type="number" disabled="true" min="0" v-model="roomNum.childNum" class="numInp"/>
           <button type="button" class=" decBtn addBtn" style="border-left:1rpx solid #c7c7c7;" @click="addBtn(1)">+</button>
         </div>
       </div>
@@ -53,7 +54,6 @@
                     <p class="camperName">{{item.name}}</p>
                     <p class="camperOlder">({{item.older}})</p>
                   </div>
-
                 </div>
                 <div class="weui-cell__hd weui-check__hd_in-checkbox" v-if="item.checked">
                   <!--<icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!item.checked"></icon>-->
@@ -110,8 +110,8 @@
           </div>
           <div class="page" v-if="hotelVisible">
             <radio-group @change="changeHotel">
-              <label class="weui-cell weui-check__label" v-for="item in hotelType" :key="index">
-                <radio class="weui-check" :value="item.value" :checked="item.checked" />
+              <label class="weui-cell weui-check__label" v-for="item in hotelType" :key="index" v-model="selectRadio">
+                <radio class="weui-check" :value="item.value" :checked="item.checked"/>
                 <div class="weui-cell__bd">
                   <p class="camperName">{{item.type}}</p>
                 </div>
@@ -133,7 +133,7 @@
           </div>
           <div class="page" v-if="gatherPlaceVisible">
             <radio-group @change="changeGatherPlace">
-              <label class="weui-cell weui-check__label" v-for="item in gatherPlace" :key="index">
+              <label class="weui-cell weui-check__label" v-for="item in gatherPlace" :key="index" v-model="selectValue">
                 <radio class="weui-check" :value="item.value" :checked="item.checked" />
                 <div class="weui-cell__bd">
                   <div class="gather">
@@ -152,9 +152,9 @@
     </div>
     <div class="outBtn">
       <div class="totalPrice">
-        <div class="priceOut">总价：￥<div class="priceInner">{{totalPrice}}</div></div>
+        <div class="priceOut">总价：￥<div class="priceInner">{{changeMoney}}</div></div>
       </div>
-     <button class="alipay">立即支付</button>
+     <button class="alipay" @click="alipay">立即支付</button>
     </div>
   </div>
 </template>
@@ -174,12 +174,25 @@ export default {
         threeRoom: 0,
         familyRoom: 0
       },
-      price: [
-        '5000',
-        '5600',
-        '4500',
-        '6666'
-      ],
+      price: [5000, 6000, 8888, 6666],
+      prices: {
+        manPrice: 5000,
+        childPrice: 300,
+        hotelPrice: {
+          thrStarDoub: 199,
+          thrStarBig: 168,
+          thrStarThree: 259,
+          thrStarFamily: 299,
+          fouStarDoub: 229,
+          fouStarBig: 239,
+          fouStarThree: 299,
+          fouStarFamily: 349,
+          fivStarDoub: 259,
+          fivStarBig: 278,
+          fivStarThree: 339,
+          fivStarFamily: 359
+        }
+      },
       campers: [
         {name: '江小白', older: '儿童', value: '0', checked: false},
         {name: '江爸爸', older: '成人', value: '1', checked: false},
@@ -199,15 +212,52 @@ export default {
       hotelSrc: 'http://pics.ctripfair.com/icon_more_def.png',
       gatherSrc: 'http://pics.ctripfair.com/icon_more_def.png',
       type: false,
-      totalPrice: 0,
+      // totalPrice: 0,
       campersVisible: false,
       gatherPlaceVisible: false,
-      hotelVisible: false
+      hotelVisible: false,
+      selectValue: '',
+      selectRadio: ''
     }
   },
   mounted: function () {
     let _this = this
     _this.order.title = _this.$root.$mp.query.title
+  },
+  computed: {
+    changeMoney: function () {
+      let _this = this
+      let totalPrice = 0
+      let double, bigBed, threeBed, family, orderPrice
+      let man = _this.prices.manPrice * _this.roomNum.manNum
+      let child = _this.prices.childPrice * _this.roomNum.childNum
+      orderPrice = man + child
+      totalPrice += orderPrice
+      switch (_this.selectRadio) {
+        case 'a':
+          double = _this.prices.hotelPrice.thrStarDoub * _this.roomNum.doubleRoom
+          bigBed = _this.prices.hotelPrice.thrStarBig * _this.roomNum.bigRoom
+          threeBed = _this.prices.hotelPrice.thrStarThree * _this.roomNum.threeRoom
+          family = _this.prices.hotelPrice.thrStarFamily * _this.roomNum.familyRoom
+          totalPrice = orderPrice + double + bigBed + threeBed + family
+          break
+        case 'b':
+          double = _this.prices.hotelPrice.fouStarDoub * _this.roomNum.doubleRoom
+          bigBed = _this.prices.hotelPrice.fouStarBig * _this.roomNum.bigRoom
+          threeBed = _this.prices.hotelPrice.fouStarThree * _this.roomNum.threeRoom
+          family = _this.prices.hotelPrice.fouStarFamily * _this.roomNum.familyRoom
+          totalPrice = orderPrice + double + bigBed + threeBed + family
+          break
+        case 'c':
+          double = _this.prices.hotelPrice.fivStarDoub * _this.roomNum.doubleRoom
+          bigBed = _this.prices.hotelPrice.fivStarBig * _this.roomNum.bigRoom
+          threeBed = _this.prices.hotelPrice.fivStarThree * _this.roomNum.threeRoom
+          family = _this.prices.hotelPrice.fivStarFamily * _this.roomNum.familyRoom
+          totalPrice = orderPrice + double + bigBed + threeBed + family
+          break
+      }
+      return totalPrice
+    }
   },
   methods: {
     checkboxChange: function (e) {
@@ -228,6 +278,9 @@ export default {
       let hotelType = this.hotelType
       for (let i = 0; i < hotelType.length; i++) {
         hotelType[i].checked = hotelType[i].value === e.mp.detail.value
+        if (hotelType[i].checked) {
+          this.selectRadio = hotelType[i].value
+        }
       }
       this.hotelType = hotelType
     },
@@ -235,6 +288,9 @@ export default {
       let gatherPlace = this.gatherPlace
       for (let i = 0; i < gatherPlace.length; i++) {
         gatherPlace[i].checked = gatherPlace[i].value === e.mp.detail.value
+        if (gatherPlace[i].checked) {
+          this.selectValue = gatherPlace[i].value
+        }
       }
       this.gatherPlace = gatherPlace
     },
@@ -382,6 +438,9 @@ export default {
           })
           break
       }
+    },
+    alipay: function () {
+      console.log('立即支付')
     }
   }
 }

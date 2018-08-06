@@ -1,51 +1,46 @@
 <!--个人信息页面-->
 <template>
-  <div class="userinfo">
-    <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-    <div class="userinfo-nickname">
-      <p>{{userInfo.nickName}}</p>
-      <h3 align="center" v-if="userInfo.gender==1">男</h3>
-      <h3 align="center" v-else>女</h3>
+  <div>
+    <!--营员信息（头）-->
+    <div style="height: 300rpx">
+      <personal-info :info_props_title="title" :info_props_nickName="nickName" :info_props_avatar="avatar"></personal-info>
     </div>
-    <div @click="bindViewTap">
-      <button>{{info}}</button>
-    </div>
+    <div class="blankBox"></div>
+    <div class="infoBox"><p class="infoTitle">姓名</p></div>
   </div>
 </template>
 
 <script>
-    export default {
-      data () {
-        return {
-          info: 'Hello liRui,click here to check the log of login',
-          userInfo: {}
-        }
-      },
-      created () {
-      },
-      methods: {
-        bindViewTap () {
-          const url = '../logs/main'
-          wx.navigateTo({url})
-        }
+  import personalInfo from '@/components/personalInfo'
+  export default {
+    components: {
+      personalInfo
+    },
+    data () {
+      return {
+        title: '江小白',
+        nickName: 'sanzhixiong',
+        avatar: 'http://pics.ctripfair.com/cute1.jpeg'
       }
+    },
+    created () {
+    },
+    methods: {
     }
+  }
 </script>
 
 <style scoped>
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .blankBox{
+    width: 750rpx;
+    height: 20rpx;
+    background: #EFEFF4;
   }
-  .userinfo-avatar {
-    width: 128rpx;
-    height: 128rpx;
-    margin: 20rpx;
-    border-radius: 50%;
+  .infoBox{
+    width: 750rpx;
+    height: 100rpx;
   }
-
-  .userinfo-nickname {
-    color: #aaa;
+  .infoTitle{
+    margin: 20rpx 30rpx 20rpx 30rpx;
   }
 </style>
