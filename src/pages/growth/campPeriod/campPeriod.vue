@@ -12,8 +12,8 @@
         <!--<img class="userinfo-avatar" :src="avatar" background-size="cover" />-->
       <!--</div>-->
       <!--营员信息（头）-->
-      <div style="height: 300rpx">
-        <personal-info :info_props_title="title" :info_props_nickName="nickName" :info_props_avatar="avatar"></personal-info>
+      <div>
+        <personal-info></personal-info>
       </div>
     </div>
     <!--营期信息-->

@@ -13,7 +13,7 @@
       </div>
       <!--头像-->
       <div style="width: 150rpx;height:150rpx; float: right">
-        <div style="overflow: hidden;border-radius: 50%;" v-if="!info.avatar || info.avatar===''">
+        <div style="overflow: hidden;border-radius: 50%;height: 150rpx;" v-if="!info.avatar || info.avatar===''">
           <open-data type="userAvatarUrl" ></open-data>
         </div>
         <!--<img style="width: 150rpx;height:150rpx;border-radius: 50%;" v-if="info.avatar==='' || !info.avatar" :src="userInfo.avatarUrl" />-->
@@ -58,6 +58,7 @@
   .mine {
     width: 100%;
     display: flex;
+    margin-bottom: 20rpx;
   }
 
   .nickNameDiv {

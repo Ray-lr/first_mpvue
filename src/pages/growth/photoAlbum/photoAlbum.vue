@@ -2,8 +2,8 @@
     <div>
       <!--营员信息（头）-->
       <div class="mine">
-        <div style="height: 300rpx">
-          <personal-info :info_props_title="title" :info_props_nickName="nickName" :info_props_avatar="avatar"></personal-info>
+        <div>
+          <personal-info></personal-info>
         </div>
       </div>
       <!-- 照片墙-->
