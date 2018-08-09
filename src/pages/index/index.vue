@@ -40,7 +40,7 @@
       </div>
     </div>
     <!--滑块-->
-    <div >
+    <div>
     <slide></slide>
     </div>
     <div v-for="(item,index) in info" :key="index">

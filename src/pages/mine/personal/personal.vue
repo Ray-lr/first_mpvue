@@ -73,7 +73,9 @@
   }
   .infoBox{
     width: 750rpx;
-    height: 80rpx;
+    height: 90rpx;
+    border-bottom: 1rpx solid #c7c7c7;
+    padding: 10rpx;
   }
   .infoTitle{
     margin: 20rpx 30rpx 0rpx 30rpx;

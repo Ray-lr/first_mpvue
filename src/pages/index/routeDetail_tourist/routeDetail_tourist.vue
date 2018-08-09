@@ -17,10 +17,16 @@
         </div>
       </div>
     </div>
+    <!--<mt-popup-->
+      <!--v-model="popupVisible"-->
+      <!--position="top"-->
+      <!--popup-transition="popup-fade">-->
+      <!--<calendar  v-if="detail.proLeaveTime && pic" ref="calendar" @getday="getday" :ptype="pic" :leavetime="detail.proLeaveTime" :price="pic" ></calendar>-->
+    <!--</mt-popup>-->
     <!--日期时间-->
-    <div class="timeSpaceDiv">
+    <div class="timeSpaceDiv" @click="gettrueday">
         <p class="otherFonts">发团日期</p>
-        <p class="otherFonts" style="text-align: right;color: #151515">2018.8.15</p>
+        <p class="otherFonts" style="text-align: right;color: #151515">{{teamDate}}</p>
         <img style="width: 15.6rpx;height: 26rpx;margin: 30rpx 0" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
     </div>
     <div class="timeSpaceDiv" style="margin-bottom: 60rpx">
@@ -74,9 +80,11 @@
 
 <script>
   import scheduling from '@/components/index/routeDetail/scheduling'
+  // import calendar from '../../../utils/calendar.js'
   export default {
     components: {
       scheduling
+      // calendar
     },
     props: ['route_tourist'],
     data () {
@@ -88,6 +96,12 @@
           price: '',
           introduction: ''
         },
+        teamDate: '2018-08-08',
+        popupVisible: false,
+        detail: {
+          proLeaveTime: '2018-08-08'
+        },
+        pic: 2199,
         tabs: ['行程安排', '线路特色', '费用说明', '预订须知'],
         activeIndex: 0,
         fontSize: 30,
@@ -115,6 +129,19 @@
       tabClick (e) {
         // console.log(e)
         this.activeIndex = e.currentTarget.id
+      },
+      getday: function (v) {
+        console.log('22222')
+        if (this.popupVisible) {
+          this.teamDate = v
+          // this.getProMoney()
+          this.popupVisible = false
+        }
+      },
+      gettrueday: function () {
+        console.log('111111')
+        this.popupVisible = true
+        console.log(this.popupVisible)
       },
       navigate2FillOrder: function () {
         let _this = this

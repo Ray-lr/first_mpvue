@@ -1,12 +1,12 @@
 // 首页顶端滑块组件
 <template>
-  <swiper style="height: 300px;align-items: center;box-shadow:20rpx 20rpx 20rpx #cccccc;border-radius:8%" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
+  <swiper style="height: 600rpx;width: 700rpx;margin-left: 31rpx; margin-right: 18rpx; box-shadow:20rpx 20rpx 20rpx #cccccc;border-radius:8%" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
           previous-margin="0" next-margin="0"
           :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
     <div v-for="item in infos" :key="index">
       <swiper-item>
         <p style="font-size: 60rpx;margin: 10rpx 20rpx;width: 80%">{{item.dict_label}}</p>
-        <img style="margin:0 0rpx;box-shadow:20rpx 20rpx 20rpx #cccccc;" :src="item.pic_url" class="slide-image"/>
+        <img style="box-shadow:20rpx 20rpx 20rpx #cccccc;" :src="item.pic_url" class="slide-image"/>
       </swiper-item>
     </div>
   </swiper>

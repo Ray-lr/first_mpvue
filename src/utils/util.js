@@ -15,7 +15,7 @@ function formatNumber (n) {
   return n[1] ? n : '0' + n
 }
 // http://demo.ctripfair.com/wap
-let baseUrl = 'http://localhost/wap'
+let baseUrl = 'http://demo.ctripfair.com/wap'
 const request = {
   get (url, data) {
     wx.showLoading({

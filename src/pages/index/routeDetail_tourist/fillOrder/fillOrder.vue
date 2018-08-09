@@ -5,7 +5,12 @@
       <p class="subtitle">{{order.title}}</p>
       <p class="introduction">简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介</p>
     </div>
-    <calendar></calendar>
+    <!--<mt-popup-->
+      <!--v-model="popupVisible"-->
+      <!--position="middle"-->
+      <!--popup-transition="popup-fade">-->
+      <!--<calendar v-if="detail.proLeaveTime && pic" ref="calendar" @getday="getday" :ptype="pic" :leavetime="detail.proLeaveTime" :price="pic" ></calendar>-->
+    <!--</mt-popup>-->
     <!--滚动条-->
     <div class="scroll">
       <div class="item" v-for="item in price" :key="index">
@@ -13,8 +18,8 @@
           <p style="margin: 44rpx 0rpx 4rpx 42rpx">￥</p>
           <p class="price">{{item}}</p>
         </div>
-        <div>
-          <p class="time">08/15-08/22</p>
+        <div @click="gettrueday">
+          <p class="time">{{teamDate}}</p>
         </div>
       </div>
     </div>
@@ -208,6 +213,10 @@ export default {
         {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '07:30', value: 'B', checked: false},
         {gathPlace: '天津滨海国际机场T2航站楼总服务台接待室', gathTime: '08:30', value: 'C', checked: false}
       ],
+      detail: {
+        proLeaveTime: null
+      },
+      pic: null,
       campersSrc: 'http://pics.ctripfair.com/icon_more_def.png',
       hotelSrc: 'http://pics.ctripfair.com/icon_more_def.png',
       gatherSrc: 'http://pics.ctripfair.com/icon_more_def.png',
@@ -217,7 +226,9 @@ export default {
       gatherPlaceVisible: false,
       hotelVisible: false,
       selectValue: '',
-      selectRadio: ''
+      selectRadio: '',
+      popupVisible: false,
+      teamDate: '2018-08-08'
     }
   },
   mounted: function () {
@@ -260,6 +271,16 @@ export default {
     }
   },
   methods: {
+    getday: function (v) {
+      if (this.popupVisible) {
+        this.teamDate = v
+        // this.getProMoney()
+        this.popupVisible = false
+      }
+    },
+    gettrueday: function () {
+      this.popupVisible = true
+    },
     checkboxChange: function (e) {
       // console.log('checkbox发生change事件，携带value值为：' + e.mp.detail.value)
       let campers = this.campers
