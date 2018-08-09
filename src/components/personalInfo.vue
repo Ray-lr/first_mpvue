@@ -45,9 +45,9 @@
     },
     created: function () {
       let _this = this
-      _this.info.title = _this.info_props_title
-      _this.info.badge = _this.info_props_badge
-      _this.info.avatar = _this.info_props_avatar
+      _this.info.title = _this.info_props_title ? _this.info_props_title : null
+      _this.info.badge = _this.info_props_badge ? _this.info_props_badge : null
+      _this.info.avatar = _this.info_props_avatar ? _this.info_props_avatar : null
     },
     methods: {
     }

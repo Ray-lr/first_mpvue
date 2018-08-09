@@ -108,12 +108,12 @@
       _this.route.introduction = _this.$root.$mp.query.introduction
       _this.$request.post('/route/getRouteProductDetail/' + _this.route.id, {}).then(data => {
         _this.routeDetail = data.data.routeProEntity
-        console.log(_this.routeDetail)
+        // console.log(_this.routeDetail)
       })
     },
     methods: {
       tabClick (e) {
-        console.log(e)
+        // console.log(e)
         this.activeIndex = e.currentTarget.id
       },
       navigate2FillOrder: function () {

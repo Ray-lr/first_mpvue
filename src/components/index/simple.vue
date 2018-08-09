@@ -56,7 +56,7 @@
       created: function () {
         if (this.imgs.length > 0) {
           this.params = this.imgs
-          console.log(this.params)
+          // console.log(this.params)
         }
       },
       methods: {

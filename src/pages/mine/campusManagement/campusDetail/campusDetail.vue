@@ -12,10 +12,6 @@
     </div>
 
     <div style="background-color:#EFEFF4;height: 1056rpx;">
-      <div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7"></div>
-      <div>
-        <p class="tips">谁关注我</p>
-      </div>
       <div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7;"></div>
       <!--其他信息-->
       <div>

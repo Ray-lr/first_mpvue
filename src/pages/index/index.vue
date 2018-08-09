@@ -216,6 +216,7 @@ export default {
         // 根据出行方式查询产品
         for (let i = 0; i < _this.headTitle.length; i++) {
           _this.$request.post('/route/getRouteListByLib', {proType: _this.headTitle[i].dict_label}).then(data => {
+            // console.log(data)
             // 如果查到有数据，就将第一条赋值到数组info中的第一个对象
             if (data.data.data.length > 0) {
               _this.info[i][0].id = data.data.data[0].proNum
