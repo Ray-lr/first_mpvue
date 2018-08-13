@@ -14,7 +14,7 @@ function formatNumber (n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-// http://demo.ctripfair.com/wap
+// http://localhost/wap
 let baseUrl = 'http://demo.ctripfair.com/wap'
 const request = {
   get (url, data) {

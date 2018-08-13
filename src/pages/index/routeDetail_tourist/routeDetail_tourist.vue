@@ -17,6 +17,7 @@
         </div>
       </div>
     </div>
+    <calendar>123456</calendar>
     <!--<mt-popup-->
       <!--v-model="popupVisible"-->
       <!--position="top"-->
@@ -80,7 +81,6 @@
 
 <script>
   import scheduling from '@/components/index/routeDetail/scheduling'
-  // import calendar from '../../../utils/calendar.js'
   export default {
     components: {
       scheduling
