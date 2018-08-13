@@ -575,9 +575,10 @@ export default {
     border: 1rpx solid #c7c7c7;
     margin-top: 15rpx;
     display: flex;
+    padding: auto 0rpx;
   }
   .decBtn{
-    width:70rpx;
+    width:71rpx;
     height: 50rpx;
     line-height: 36rpx;
     color: #999999;
@@ -586,7 +587,7 @@ export default {
     /*text-align: center;*/
     /*font-size: 32rpx;*/
     padding-top: 7rpx;
-    padding-left:22rpx;
+    padding-left:23rpx;
   }
   .addBtn{
     float: right;

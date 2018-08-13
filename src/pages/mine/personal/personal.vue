@@ -30,6 +30,10 @@
       <p class="infoTitle">家庭角色</p>
       <div style="padding-top: 10rpx"><input type="text" v-model="role" class="nameBox" placeholder="请输入家庭角色"/></div>
     </div>
+    <!--保存个人信息按钮-->
+    <div style="margin-top:auto;">
+      <img class="reduceButton" @click="saveBtn" src="http://pics.ctripfair.com/save.png"/>
+    </div>
   </div>
 </template>
 
@@ -60,6 +64,14 @@
         let _this = this
         _this.idType = this.array_id[e.mp.detail.value]
         _this.indexPicker = e.mp.detail.value
+      },
+      saveBtn: function () {
+        wx.showModal({
+          title: '保存成功!',
+          content: '',
+          confirmText: '确定',
+          showCancel: false
+        })
       }
     }
   }
@@ -88,5 +100,10 @@
   .nameBox{
     height:80rpx;
     font-size: 32rpx;
+  }
+  .reduceButton{
+    width: 120rpx;
+    height: 120rpx;
+    margin: 60rpx 314rpx;
   }
 </style>

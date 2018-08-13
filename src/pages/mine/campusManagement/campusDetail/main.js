@@ -5,6 +5,6 @@ const app = new Vue(App)
 app.$mount()
 export default {
   config: {
-    navigationBarTitleText: '谁关注我'
+    navigationBarTitleText: '营员信息'
   }
 }

@@ -10,19 +10,42 @@
         <img class="userinfo-avatar" src="http://pics.ctripfair.com/avatar.jpg" background-size="cover" />
       </div>
     </div>
-
-    <div style="background-color:#EFEFF4;height: 1056rpx;">
-      <div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7;"></div>
-      <!--其他信息-->
-      <div>
-        <div style="background-color: #ffffff;position: absolute;">
-          <member :members="member" :url_props="url"></member>
-          <!--添加关注者按钮-->
-          <div style="margin-top:auto;">
-            <img class="addButton" @click="share" src="http://pics.ctripfair.com/ico_add1.png"/>
-          </div>
-        </div>
+    <div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7;"></div>
+    <p class="detailBox">信息详情</p>
+    <div>
+      <div class="detailInfo">
+        <div class="title">姓名</div>
+        <input type="text" :value="detailInfo.name" class="infoInt"/>
       </div>
+      <div class="detailInfo">
+        <div class="title">证件类型</div>
+        <input type="text" :value="detailInfo.IDType" class="infoInt"/>
+      </div>
+      <div class="detailInfo">
+        <div class="title">证件号码</div>
+        <input type="text" :value="detailInfo.IDCode" class="infoInt"/>
+      </div>
+      <div class="detailInfo">
+        <div class="title">家庭角色</div>
+        <input type="text" :value="detailInfo.familyRole" class="infoInt"/>
+      </div>
+      <div class="detailInfo">
+        <div class="title">手机号码</div>
+        <input type="text" :value="detailInfo.phone" class="infoInt"/>
+      </div>
+    </div>
+    <button type="button" class="saveBtn">保存</button>
+    <div @click="changeCampusList">
+      <p class="detailBox" style="display: inline-block;width: 100%;margin-top: 50rpx;border-top: 1rpx solid #c7c7c7;">
+        <img :src="campusSrc" class="srcIcon" />谁关注我</p>
+    </div>
+    <!--其他信息-->
+    <div v-if="campusInfoVisible">
+      <member :members="member" :url_props="url"></member>
+    </div>
+    <!--添加关注者按钮-->
+    <div>
+      <img class="addButton" @click="share" src="http://pics.ctripfair.com/ico_add1.png"/>
     </div>
   </div>
 </template>
@@ -37,6 +60,13 @@
     },
     data () {
       return {
+        detailInfo: {
+          name: '将小小',
+          IDType: '身份证',
+          IDCode: '123456789123456789',
+          familyRole: '女儿',
+          phone: '12312345678'
+        },
         member: [
           {name: '江爸爸'},
           {name: '江妈妈'},
@@ -44,7 +74,9 @@
         ],
         url: './attention2Me/main',
         name: '',
-        id: ''
+        id: '',
+        campusSrc: 'http://pics.ctripfair.com/icon_more_def.png',
+        campusInfoVisible: false
       }
     },
     mounted: function () {
@@ -69,6 +101,11 @@
             }
           }
         })
+      },
+      changeCampusList: function () {
+        let _this = this
+        _this.campusInfoVisible = !_this.campusInfoVisible
+        _this.campusSrc = _this.campusSrc === ('http://pics.ctripfair.com/icon_more_def.png') ? ('http://pics.ctripfair.com/icon_more_pre.png') : ('http://pics.ctripfair.com/icon_more_def.png')
       }
     }
   }
@@ -77,51 +114,14 @@
 <style scoped>
   .mine{
     width: 100%;
-    height: 150rpx;
+    height: 170rpx;
     display: flex;
-  }
-.name{
-  font-family: PingFangSC-Medium;
-  font-size: 48rpx;
-  color: #000000;
-  letter-spacing: 0.5rpx;
-  line-height: 82rpx;
-  height: 84rpx;
-  text-align: center;
-}
-  .leftP{
-    font-family: PingFangSC-Regular;
-    font-size: 40rpx;
-    color: #666666;
-    letter-spacing: 0;
-    line-height: 44rpx;
-    width: 30%;
-    margin: 22rpx 0rpx;
   }
   .nickName{
     width: 60%;
     height: 82rpx;
     margin: 30rpx;
   }
-  .rightP{
-    font-family: PingFangSC-Regular;
-    font-size: 40rpx;
-    color: #151515;
-    letter-spacing: 0;
-    line-height: 44rpx;
-    width: 70%;
-    margin: 22rpx 0rpx;
-    text-align: right;
-  }
-.members{
-  display: flex;
-  border-bottom-style: solid;
-  border-width: 2rpx 0rpx;
-  border-color: #c7c7c7;
-  float: right;
-  width: 90%;
-  height: 88rpx;
-}
 .addButton{
   width: 120rpx;
   height: 120rpx;
@@ -133,13 +133,57 @@
   margin: 20rpx;
   border-radius: 50%;
 }
-  .tips{
+  .detailBox{
+    background: #eeeeee;
+    height: 100rpx;
     font-family: PingFangSC-Medium;
-    font-size: 48rpx;
-    color: #c7c7c7;
-    letter-spacing: 0.5rpx;
-    line-height: 82rpx;
-    height: 84rpx;
-    text-align: center;
+    font-size: 44rpx;
+    padding-left: 30rpx;
+    letter-spacing: 0;
+    line-height: 100rpx;
+    border-bottom: 1rpx solid #c7c7c7;
+  }
+  .detailInfo{
+    font-family: PingFangSC-Medium;
+    width: 95%;
+    height: 80rpx;
+    border-bottom: 1rpx solid #c7c7c7;
+    float: right;
+  }
+  .title{
+    width: 150rpx;
+    height: 80rpx;
+    float: left;
+    font-size: 34rpx;
+    color: #7b7b7b;
+    letter-spacing: 0;
+    line-height: 80rpx;
+  }
+  .infoInt{
+    width: 500rpx;
+    height: 80rpx;
+    float: right;
+    font-size: 34rpx;
+    color: #4f4f4f;
+    text-align: right;
+    padding-right: 40rpx;
+  }
+  .saveBtn{
+    width: 160rpx;
+    height: 80rpx;
+    float: right;
+    margin-right: 60rpx;
+    margin-top: 30rpx;
+    background: #00e3e3;
+    font-family: PingFangSC-Medium;
+    line-height: 80rpx;
+    color: #ffffff;
+  }
+  .srcIcon{
+    width: 46rpx;
+    height: 36rpx;
+    float: right;
+    margin-right:70rpx;
+    margin-top:30rpx;
   }
 </style>
