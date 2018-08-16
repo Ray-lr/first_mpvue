@@ -1,20 +1,20 @@
 <!-- 查看全部组件-->
 <template>
     <div>
-      <div v-for="items in info" :key="index">
-        <div class="headTitle">{{items.headTitle}}</div>
+      <div>
+        <div class="headTitle">{{info.headTitle}}</div>
         <div class="blankBox"></div>
         <div style="width: 750rpx;">
-          <div class="itemBox" v-for="(item, inner) in items.content" :key="inner">
+          <div class="itemBox" v-for="item in info.content" :key="index">
             <div style="width: 646rpx;height: 344rpx;">
               <img class="itemImg" :src="item.url"/>
             </div>
             <div class="itemTitle">{{item.title}}</div>
-            <div class="itemWay">{{item.way}}</div>
+            <div class="itemWay">{{item.introduction}}</div>
             <div style="display: flex">
               <p style="font-size: smaller;margin-top: 10rpx">￥</p>
               <p class="price">{{item.price}}</p>
-              <p style="width:10rpx;color: #d5d5d6;font-size: smaller;margin: 10rpx auto auto 50rpx">起</p>
+              <p style="width:10rpx;color: #d5d5d6;font-size: smaller;margin: 10rpx auto auto 50rpx">&nbsp;&nbsp;起</p>
             </div>
           </div>
         </div>
@@ -31,9 +31,11 @@
         }
       },
       created: function () {
-        if (this.imgs.length > 0) {
+        if (this.imgs) {
           this.info = this.imgs
         }
+      },
+      methods: {
       }
     }
 </script>

@@ -12,109 +12,68 @@
     components: {
       viewAll
     },
+    props: ['headTitle'],
     data () {
       return {
         // 子主题图片url
-        imgs_weekend: [
+        imgs_grown:
           {
-            headTitle: '周末周边',
+            headTitle: '',
             content: [
               {
-                url: 'http://pics.ctripfair.com/weekend1.png',
-                title: '天津|野三坡三天两晚夏令营',
-                way: '8-12岁 儿童独自参团',
-                price: '1000'
-              },
-              {
-                url: 'http://pics.ctripfair.com/weekend2.png',
-                title: '天津|野三坡夏令营',
-                way: '8-12岁 儿童独自参团',
-                price: '2000'
-              },
-              {
-                url: 'http://pics.ctripfair.com/grownup2.png',
-                title: '北京|故宫三日游',
-                way: '5-12岁 家长带领参团',
-                price: '3000'
+                id: '',
+                url: '',
+                title: '',
+                introduction: '',
+                price: ''
               }
             ]
+          },
+        oneInfo: {
+          id: '',
+          url: '',
+          title: '',
+          introduction: '',
+          price: ''
+        }
+      }
+    },
+    onShow: function () {
+      let _this = this
+      this.imgs_grown.headTitle = ''
+      let array = []
+      array[0] = this.oneInfo
+      this.imgs_grown.content = array
+      _this.imgs_grown.headTitle = _this.$root.$mp.query.headTitle
+      _this.moreProduction()
+      // console.log('第一条数据：' + JSON.stringify(_this.imgs_grown))
+    },
+    methods: {
+      moreProduction: function () {
+        let _this = this
+        _this.$request.post('/route/getRouteListByLib', {proType: _this.imgs_grown.headTitle}).then(data => {
+          // console.log(data.data.data)
+          if (data.data.data.length > 0) {
+            _this.imgs_grown.content[0] = _this.oneInfo
+            _this.imgs_grown.content[0].id = data.data.data[0].proNum
+            _this.imgs_grown.content[0].url = data.data.data[0].proPublicityPic
+            _this.imgs_grown.content[0].title = data.data.data[0].proName
+            _this.imgs_grown.content[0].introduction = data.data.data[0].proIntro
+            _this.imgs_grown.content[0].price = data.data.data[0].priceList.split(':')[1].split(',')[0]
+            _this.oneInfo = {}
           }
-        ],
-        imgs_grown: [
-          {
-            headTitle: '综合成长',
-            content: [
-              {
-                url: 'http://pics.ctripfair.com/grownup1.png',
-                title: '北京|北海公园三天',
-                way: '6-15岁 老师带队',
-                price: '800'
-              },
-              {
-                url: 'http://pics.ctripfair.com/grownup2.png',
-                title: '北京|长城七日游',
-                way: '8-16岁 家长跟随',
-                price: '1888'
-              },
-              {
-                url: 'http://pics.ctripfair.com/weekend2.png',
-                title: '泰安|泰山五日游',
-                way: '7-15岁 家长陪同',
-                price: '2888'
-              }
-            ]
+          if (data.data.data.length > 1) {
+            for (let i = 1; i < data.data.data.length; i++) {
+              _this.oneInfo.id = data.data.data[i].proNum
+              _this.oneInfo.url = data.data.data[i].proPublicityPic
+              _this.oneInfo.title = data.data.data[i].proName
+              _this.oneInfo.introduction = data.data.data[i].proIntro
+              _this.oneInfo.price = data.data.data[i].priceList.split(',')[0].split(':')[1]
+              _this.imgs_grown.content.push(_this.oneInfo)
+              _this.oneInfo = {}
+            }
           }
-        ],
-        imgs_international: [
-          {
-            headTitle: '国际课堂',
-            content: [
-              {
-                url: 'http://pics.ctripfair.com/international1.png',
-                title: '泰国|曼谷七日游',
-                way: '10-18岁 家长陪同',
-                price: '8888'
-              },
-              {
-                url: 'http://pics.ctripfair.com/international2.png',
-                title: '云南|大理九日游',
-                way: '9-17岁 家长陪同',
-                price: '6888'
-              },
-              {
-                url: 'http://pics.ctripfair.com/weekend1.png',
-                title: '天津|天津野三坡夏令营五日游',
-                way: '8-12岁 家长跟随',
-                price: '1500'
-              }
-            ]
-          }
-        ],
-        imgs_education: [
-          {
-            headTitle: '营地教育',
-            content: [
-              {
-                url: 'http://pics.ctripfair.com/weekend1.png',
-                title: '天津|野三坡三天两晚夏令营',
-                way: '8-12岁 儿童独自参团',
-                price: '1000'
-              },
-              {
-                url: 'http://pics.ctripfair.com/weekend2.png',
-                title: '天津|野三坡夏令营',
-                way: '8-12岁 儿童独自参团',
-                price: '2000'
-              },
-              {
-                url: 'http://pics.ctripfair.com/grownup2.png',
-                title: '北京|故宫三日游',
-                way: '5-12岁 家长带领参团',
-                price: '3000'
-              }
-            ]
-          }
-        ]
+        })
       }
     }
   }

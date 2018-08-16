@@ -45,7 +45,7 @@
     </div>
     <div v-for="(item,index) in info" :key="index">
       <div class="littleHead">
-        <little-head :headTitle="headTitle[index].dict_label"></little-head>
+        <little-head :headTitle="headTitle[index].dict_label" :obj="info[index]"></little-head>
       </div>
       <!--图文1-->
       <div>
