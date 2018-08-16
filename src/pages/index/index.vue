@@ -59,6 +59,7 @@
 import slide from '@/components/slide'
 import littleHead from '@/components/index/little_head'
 import simple from '@/components/index/simple'
+import Vue from 'vue'
 export default {
   components: {
     slide,
@@ -144,6 +145,14 @@ export default {
       key: 'token',
       success: function (res) {
         console.log('查询token成功：' + res.data)
+        wx.getStorage({
+          key: 'userId',
+          success: function (resUserId) {
+            // 将userId添加为vue原型（全局常量）
+            Vue.prototype.$userId = resUserId.data
+            console.log('获取userId成功：' + _this.$userId)
+          }
+        })
         if (_this.headTitle[0].dict_label === '') {
           _this.selectProduction()
         }
@@ -160,6 +169,18 @@ export default {
                 data: {code: resLogin.code},
                 method: 'post',
                 success (data) {
+                  console.log('登录后返回：')
+                  console.log(data.data.data.userId)
+                  // console.log(JSON.parse(data.data.data.user).userEntity)
+                  // 将userId存入storage
+                  wx.setStorage({
+                    key: 'userId',
+                    data: data.data.data.userId,
+                    success () {
+                      console.log('userId存储成功：' + data.data.data.userId)
+                    }
+                  })
+                  Vue.prototype.$userId = data.data.data.userId
                   // 将openId存入storage
                   wx.setStorage({
                     key: 'openId',

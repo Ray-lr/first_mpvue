@@ -8,7 +8,7 @@
     <div style="border-top-style: solid;border-width: 2rpx;border-color: #c7c7c7"></div>
     <!--表单-->
     <div>
-      <form @submit.prevent="addSubmit($event)">
+      <form @submit.prevent="addSubmit()">
         <div class="element">
           <div>
             <p class="fonts">成员姓名&nbsp&nbsp</p>
@@ -21,7 +21,7 @@
         </div>
         <div class="element" style="border-style: solid;border-width: 2rpx 0;border-color: #c7c7c7">
           <div>
-            <picker @change="IDChange" :value="indexPicker" :range="array_id">
+            <picker @change="IDChange" :value="indexPickerId" :range="array_id">
               <p class="fonts">{{idType}}
                 <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>&nbsp&nbsp
               </p>
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="element">
-          <picker @change="roleChange" :value="indexPicker" :range="array_role">
+          <picker @change="roleChange" :value="indexPickerRole" :range="array_role">
             <p class="fonts">{{role}}
               <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>&nbsp&nbsp
             </p>
@@ -63,11 +63,12 @@
     data () {
       return {
         IDRex: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-        indexPicker: 0,
+        indexPickerId: 0,
+        indexPickerRole: 0,
         array_role: ['儿子', '女儿'],
-        array_id: ['身份证', '港澳台通行证', '护照', '军官证'],
+        array_id: ['身份证', '护照', '港澳台通行证', '军官证'],
         idType: '身份证',
-        role: '家庭角色',
+        role: '儿子',
         name: '',
         nameCheck: ' ',
         idNum: '',
@@ -104,12 +105,14 @@
         }
       },
       roleChange (e) {
-        console.log('选中的值为：' + this.array_role[e.mp.detail.value])
-        this.role = this.array_role[e.mp.detail.value]
+        this.indexPickerRole = parseInt(e.mp.detail.value)
+        this.role = this.array_role[this.indexPickerRole]
+        console.log('选中的值为：' + this.array_role[this.indexPickerRole])
+        console.log(this.indexPickerRole)
       },
       IDChange (e) {
         this.idType = this.array_id[e.mp.detail.value]
-        this.indexPicker = e.mp.detail.value
+        this.indexPickerId = parseInt(e.mp.detail.value)
         switch (this.idType) {
           case '港澳台通行证':
             this.IDRex = /(^[HMhm]{1}([0-9]{10}|[0-9]{8})$)|(^[0-9]{8}$)|(^[0-9]{10}$)/
@@ -120,11 +123,39 @@
           case '军官证':
             this.IDRex = /^[a-zA-Z0-9]{7,21}$/
         }
-        console.log('选中的证件类型为：' + this.array_id[e.mp.detail.value])
+        console.log('选中的证件类型为：' + this.array_id[this.indexPickerId])
+        console.log(this.indexPickerId + 1)
       },
-      addSubmit: function (event) {
+      addSubmit: function () {
         if (this.nameCheck === '' && this.idNumCheck === '' && this.phoneCheck === '') {
           console.log('姓名：' + this.name + '身份证号：' + this.idNum + '手机号：' + this.phone)
+          console.log('userId:' + this.$userId)
+          this.$request.post('/wira/addWira', {
+            'userCode': this.$userId,
+            'name': this.name,
+            'certType': this.indexPickerId + 1,
+            'certNum': this.idNum,
+            'homeRole': this.homeRole,
+            'mobile': this.phone
+          }).then(data => {
+            if (data.status === '200') {
+              console.log('请求成功：')
+              console.log(data)
+              wx.showModal({
+                title: '提示',
+                content: '营员添加成功！',
+                confirmText: '好',
+                showCancel: false,
+                success: function (res) {
+                  if (res.confirm) {
+                    wx.navigateTo({
+                      url: '../main'
+                    })
+                  }
+                }
+              })
+            }
+          })
         } else {
           wx.showModal({
             title: '错误',
