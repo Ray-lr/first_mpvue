@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <calendar>123456</calendar>
+    <calendar v-if="detail.proLeaveTime && pic" ref="calendar" @getday="getday" :ptype="pic" :leavetime="detail.proLeaveTime" :price="pic">123456</calendar>
     <!--<mt-popup-->
       <!--v-model="popupVisible"-->
       <!--position="top"-->
@@ -117,12 +117,15 @@
       let _this = this
       _this.route.id = _this.$root.$mp.query.id
       _this.route.title = _this.$root.$mp.query.title
-      _this.route.url = _this.$root.$mp.query.img
-      _this.route.price = _this.$root.$mp.query.price
-      _this.route.introduction = _this.$root.$mp.query.introduction
+      // _this.route.url = _this.$root.$mp.query.img
+      // _this.route.price = _this.$root.$mp.query.price
+      // _this.route.introduction = _this.$root.$mp.query.introduction
       _this.$request.post('/route/getRouteProductDetail/' + _this.route.id, {}).then(data => {
+        // console.log('路线详情：' + JSON.stringify(data.data))
         _this.routeDetail = data.data.routeProEntity
-        // console.log(_this.routeDetail)
+        _this.route.url = _this.routeDetail.proPublicityPic
+        _this.route.introduction = _this.routeDetail.proIntro
+        _this.route.price = data.data.proLeaveTime.split(':')[1].split(',')[0]
       })
     },
     methods: {

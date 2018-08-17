@@ -5,7 +5,7 @@
         <div class="headTitle">{{info.headTitle}}</div>
         <div class="blankBox"></div>
         <div style="width: 750rpx;">
-          <div class="itemBox" v-for="item in info.content" :key="index">
+          <div class="itemBox" v-for="item in info.content" :key="index" @click="routeDetail(item)">
             <div style="width: 646rpx;height: 344rpx;">
               <img class="itemImg" :src="item.url"/>
             </div>
@@ -36,6 +36,11 @@
         }
       },
       methods: {
+        routeDetail: function (e) {
+          wx.navigateTo({
+            url: '../routeDetail_tourist/main?title=' + e.title + '&id=' + e.id
+          })
+        }
       }
     }
 </script>
