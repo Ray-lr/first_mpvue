@@ -141,19 +141,33 @@
             if (data.status === '200') {
               console.log('请求成功：')
               console.log(data)
-              wx.showModal({
-                title: '提示',
-                content: '营员添加成功！',
-                confirmText: '好',
-                showCancel: false,
-                success: function (res) {
-                  if (res.confirm) {
-                    wx.navigateTo({
-                      url: '../main'
-                    })
+              if (data.data !== '') {
+                wx.showModal({
+                  title: '提示',
+                  content: '营员添加成功！',
+                  confirmText: '好',
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+                      wx.navigateTo({
+                        url: '../main'
+                      })
+                    }
                   }
-                }
-              })
+                })
+              } else {
+                wx.showModal({
+                  title: '提示',
+                  content: '营员已存在，请勿重复添加！',
+                  confirmText: '好',
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+                      console.log('确定')
+                    }
+                  }
+                })
+              }
             }
           })
         } else {

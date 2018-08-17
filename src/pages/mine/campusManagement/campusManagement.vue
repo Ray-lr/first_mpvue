@@ -35,14 +35,27 @@
     data () {
       return {
         members: [
-          { name: '江小白' },
-          { name: '李小白' },
-          { name: '王小明' }
+          {name: ''}
         ],
         url: './campusDetail/main'
       }
     },
-    created: function () {
+    mounted: function () {
+      let _this = this
+      _this.$request.post('/wira/getWiraByUserId', {userId: _this.$userId}).then(data => {
+        console.log(data)
+        if (data.status === '200' && data.data.length > 0) {
+          _this.members[0].name = data.data[0].name
+          if (data.data.length > 1) {
+            let campus = {name: ''}
+            for (let i = 1; i < data.data.length; i++) {
+              campus.name = data.data[i].name
+              _this.members.push(campus)
+              campus = {name: ''}
+            }
+          }
+        }
+      })
     },
     computed: {
     },
