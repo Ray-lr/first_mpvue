@@ -44,7 +44,7 @@
       let _this = this
       _this.$request.post('/wira/getWiraByUserId', {userId: _this.$userId}).then(data => {
         console.log(data)
-        if (data.status === '200' && data.data.length > 0) {
+        if (data.status === '200' && data.data.length > _this.members.length) {
           _this.members[0].name = data.data[0].name
           if (data.data.length > 1) {
             let campus = {name: ''}
