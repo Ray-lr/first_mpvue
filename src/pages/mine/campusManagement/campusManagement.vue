@@ -13,9 +13,10 @@
       <p class="font">{{userInfo.nickName}}</p>
       <img style="width: 15rpx;height: 26rpx;margin: 30rpx 26rpx" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
     </div>-->
-    <div>
+    <div v-if="members[0].name !== ''">
       <member :members="members" :url_props="url"></member>
     </div>
+    <p class="blank" v-else>暂时还没有营员哦，快去添加吧！</p>
   </div>
   <!--添加按钮-->
   <div>
@@ -44,11 +45,11 @@
       let _this = this
       _this.$request.post('/wira/getWiraByUserId', {userId: _this.$userId}).then(data => {
         console.log(data)
-        if (data.status === '200' && data.data.length > _this.members.length) {
+        if (data.status === '200' && data.data.length > 0) {
           _this.members[0].name = data.data[0].name
           if (data.data.length > 1) {
             let campus = {name: ''}
-            for (let i = 1; i < data.data.length; i++) {
+            for (let i = _this.members.length; i < data.data.length; i++) {
               campus.name = data.data[i].name
               _this.members.push(campus)
               campus = {name: ''}
@@ -75,6 +76,13 @@
 </script>
 
 <style scoped>
+  .blank{
+    font-family: PingFangSC-Medium;
+    font-size: 36rpx;
+    color: #333333;
+    text-align: center;
+    margin-top: 20rpx;
+  }
 .font{
   font-family: PingFangSC-Medium;
   font-size: 40rpx;
