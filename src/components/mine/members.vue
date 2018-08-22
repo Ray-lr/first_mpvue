@@ -1,7 +1,7 @@
 <!--营员管理页面的每个营员-->
 <template>
   <div>
-    <div class="members" v-for="item in member" :key="index" @click="navigate2Details(item,index)">
+    <div class="members" v-for="item in member" :key="index" @click="navigate2Details(item)">
       <p class="font">{{item.name}}</p>
       <img style="width: 15rpx;height: 26rpx;margin: 30rpx 26rpx" src="http://pics.ctripfair.com/Back%20Arrow@2x.png"/>
     </div>
@@ -23,9 +23,9 @@
         _this.url = _this.url_props
       },
       methods: {
-        navigate2Details: function (item, index) {
+        navigate2Details: function (item) {
           wx.navigateTo({
-            url: this.url + '?name=' + item.name + '&id=' + index
+            url: this.url + '?name=' + item.name + '&id=' + item.wiraId
           })
         }
       }

@@ -36,7 +36,10 @@
     data () {
       return {
         members: [
-          {name: ''}
+          {
+            name: '',
+            wiraId: ''
+          }
         ],
         url: './campusDetail/main'
       }
@@ -47,12 +50,14 @@
         console.log(data)
         if (data.status === '200' && data.data.length > 0) {
           _this.members[0].name = data.data[0].name
+          _this.members[0].wiraId = data.data[0].wiraId
           if (data.data.length > 1) {
-            let campus = {name: ''}
+            let campus = {name: '', wiraId: ''}
             for (let i = _this.members.length; i < data.data.length; i++) {
               campus.name = data.data[i].name
+              campus.wiraId = data.data[i].wiraId
               _this.members.push(campus)
-              campus = {name: ''}
+              campus = {name: '', wiraId: ''}
             }
           }
         }
