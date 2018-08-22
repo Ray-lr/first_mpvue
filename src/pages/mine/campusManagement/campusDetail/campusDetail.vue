@@ -129,6 +129,12 @@
     },
     mounted: function () {
       let _this = this
+      // 重置表单验证
+      _this.nameCheck = ' '
+      _this.ageCheck = ' '
+      _this.homeRoleCheck = ' '
+      _this.idNumCheck = ' '
+      _this.mobileCheck = ' '
       // 注意mpvue的路径参数获取方式
       _this.detailInfo.name = _this.$root.$mp.query.name
       _this.wiraId = _this.$root.$mp.query.id
