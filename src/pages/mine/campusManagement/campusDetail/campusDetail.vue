@@ -35,7 +35,7 @@
       </div>
       <div class="detailInfo">
         <div class="title">证件类型</div>
-        <picker @change="IDChange" :value="idType" :range="array_id" style="padding-right: 20rpx" class="infoInt">
+        <picker @change="IDChange" :value="indexPickerId" :range="array_id" style="padding-right: 20rpx" class="infoInt">
           <p style="height: 82rpx;padding-top: 14rpx">{{idType}}
             <img style="width: 32rpx;height: 26rpx" src="http://pics.ctripfair.com/ico_more2.png"/>&nbsp
           </p>
@@ -90,6 +90,7 @@
         IDRex: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
         // 证件类型选择器
         array_id: ['身份证', '护照', '港澳台通行证', '军官证'],
+        indexPickerId: 0,
         idType: '',
         // 性别选择器
         array_sex: ['女', '男'],
