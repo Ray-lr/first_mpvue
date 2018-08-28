@@ -16,7 +16,7 @@ function formatNumber (n) {
 }
 // http://localhost/wap 本地测试
 // http://demo.ctripfair.com/wap  线上服务器
-let baseUrl = 'http://localhost/wap'
+let baseUrl = 'http://demo.ctripfair.com/wap'
 const request = {
   get (url, data) {
     wx.showLoading({

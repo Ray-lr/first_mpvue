@@ -86,21 +86,25 @@
       },
       myOrder: function () {
         console.log('navigate to order')
+        wx.vibrateShort()
         wx.navigateTo({
           url: './order/main'
         })
       },
       myInfo: function () {
+        wx.vibrateShort()
         wx.navigateTo({
           url: './personal/main'
         })
       },
       navigate2Discount: function () {
+        wx.vibrateShort()
         wx.navigateTo({
           url: './discount/main'
         })
       },
       navigate2CampusManagement: function () {
+        wx.vibrateShort()
         wx.navigateTo({
           url: './campusManagement/main'
         })

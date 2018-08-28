@@ -29,7 +29,7 @@
       </div>
       <div class="detailInfo">
         <div class="title">年龄</div>
-        <input type="text" v-model="detailInfo.age" @blur="checkAge" class="infoInt"/>
+        <input type="number" v-model="detailInfo.age" @blur="checkAge" class="infoInt"/>
         <p class="checkError" v-if="ageCheck!==''">{{ageCheck}}</p>
         <p class="checked" v-else>年龄认证通过</p>
       </div>
@@ -95,11 +95,11 @@
         array_sex: ['女', '男'],
         sex: '',
         // 检查用户输入格式
-        nameCheck: ' ',
-        idNumCheck: ' ',
-        ageCheck: ' ',
-        homeRoleCheck: ' ',
-        mobileCheck: ' ',
+        nameCheck: '',
+        idNumCheck: '',
+        ageCheck: '',
+        homeRoleCheck: '',
+        mobileCheck: '',
         // 营员信息
         detailInfo: {
           name: '',
@@ -130,11 +130,11 @@
     mounted: function () {
       let _this = this
       // 重置表单验证
-      _this.nameCheck = ' '
-      _this.ageCheck = ' '
-      _this.homeRoleCheck = ' '
-      _this.idNumCheck = ' '
-      _this.mobileCheck = ' '
+      _this.nameCheck = ''
+      _this.ageCheck = ''
+      _this.homeRoleCheck = ''
+      _this.idNumCheck = ''
+      _this.mobileCheck = ''
       // 注意mpvue的路径参数获取方式
       _this.detailInfo.name = _this.$root.$mp.query.name
       _this.wiraId = _this.$root.$mp.query.id
@@ -163,6 +163,7 @@
         })
       },
       updateWira: function () {
+        wx.vibrateShort()
         if (this.nameCheck === '' && this.ageCheck === '' && this.idNumCheck === '' && this.homeRoleCheck === '' && this.mobileCheck === '') {
           this.$request.post('/wira/updateWira', {
             'userCode': this.$userId,
@@ -192,6 +193,18 @@
                   }
                 }
               })
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '请输入正确的个人信息',
+            confirmText: '好',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log(res)
+              }
             }
           })
         }
@@ -265,6 +278,7 @@
         console.log(this.indexPickerId + 1)
       },
       share: function () {
+        wx.vibrateShort()
         wx.showModal({
           title: '分享营员',
           content: '确定要分享该营员吗？',
@@ -328,7 +342,7 @@
     float: right;
   }
   .title{
-    width: 150rpx;
+    width: 21%;
     height: 80rpx;
     float: left;
     font-size: 34rpx;
@@ -337,7 +351,7 @@
     line-height: 80rpx;
   }
   .infoInt{
-    width: 500rpx;
+    width: 73.386%;
     height: 80rpx;
     float: right;
     font-size: 34rpx;

@@ -24,6 +24,7 @@
       },
       methods: {
         navigate2Details: function (item) {
+          wx.vibrateShort()
           wx.navigateTo({
             url: this.url + '?name=' + item.name + '&id=' + item.wiraId
           })
