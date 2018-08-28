@@ -61,6 +61,7 @@
       },
       methods: {
         routeDetail: function (e) {
+          wx.vibrateShort()
           wx.navigateTo({
             url: './routeDetail_tourist/main?title=' + e.title + '&id=' + e.id + '&price=' + e.price + '&introduction=' + e.introduction + '&img=' + e.url
           })

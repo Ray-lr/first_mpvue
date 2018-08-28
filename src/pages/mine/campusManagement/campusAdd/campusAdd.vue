@@ -127,6 +127,7 @@
         console.log(this.indexPickerId + 1)
       },
       addSubmit: function () {
+        wx.vibrateShort()
         if (this.nameCheck === '' && this.idNumCheck === '' && this.phoneCheck === '') {
           console.log('姓名：' + this.name + '身份证号：' + this.idNum + '手机号：' + this.phone)
           console.log('userId:' + this.$userId)

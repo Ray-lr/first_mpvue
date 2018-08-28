@@ -67,11 +67,13 @@
     },
     methods: {
       navigate2MyDetails: function () {
+        wx.vibrateShort()
         wx.navigateTo({
           url: './campusDetail/main?name=' + this.userInfo.nickName
         })
       },
       navigate2CampusAdd: function () {
+        wx.vibrateShort()
         wx.navigateTo({
           url: './campusAdd/main'
         })

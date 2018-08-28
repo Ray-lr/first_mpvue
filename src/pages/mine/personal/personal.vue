@@ -243,6 +243,7 @@
         }
       },
       saveBtn: function () {
+        wx.vibrateShort()
         wx.showModal({
           content: '保存成功!',
           showCancel: false,
